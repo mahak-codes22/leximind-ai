@@ -1,563 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LexiMind AI - Enterprise Legal Review</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #09090b; color: #fafafa; }
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: #121214; }
-        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
-</head>
-<body class="antialiased">
-    <div id="root"></div>
-
-    <script type="text/babel">
-        // Custom Inline SVG Component Map for 100% Stability
-        const Icons = {
-          Layers: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>,
-          FileText: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>,
-          MessageSquare: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>,
-          BarChart2: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>,
-          Settings: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>,
-          ShieldCheck: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 11l2 2 4-4"/></svg>,
-          Sparkles: ({className}) => <svg className={className || "w-4 h-4"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>,
-          Search: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>,
-          Cpu: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>,
-          UploadCloud: () => <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>,
-          CheckCircle2: ({className}) => <svg className={className || "w-3 h-3"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>,
-          RefreshCw: ({className}) => <svg className={className || "w-3 h-3"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 11-.57-8.38l5.67-5.67"/></svg>,
-          Clock: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>,
-          Database: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>,
-          ArrowUpRight: () => <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>,
-          Send: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>,
-          Paperclip: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>,
-          Menu: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>,
-          Bell: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
-        };
-
-        // 1. HEADER COMPONENT WITH FULL NOTIFICATION DROPDOWN & AVATAR CLICK
-        function Header({ selectedModel, setSelectedModel, onToggleSidebar, onProfileClick, notifications, setNotifications }) {
-          const [showNotifBox, setShowNotifBox] = React.useState(false);
-          const hasUnread = notifications.some(n => !n.read);
-
-          return (
-            <header className="h-16 border-b border-[#27272a] bg-[#121214]/80 backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-40 relative">
-              <button onClick={onToggleSidebar} className="md:hidden text-zinc-400 hover:text-zinc-200 mr-2">
-                <Icons.Menu />
-              </button>
-              <div className="relative max-w-md w-full hidden sm:block">
-                <Icons.Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-zinc-500" />
-                <input type="text" placeholder="Search corporate files, clauses, or cross-references..." 
-                  className="w-full bg-[#18181b] border border-[#27272a] rounded-lg pl-9 pr-4 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-indigo-500" />
-              </div>
-              
-              <div className="flex items-center gap-4 ml-auto relative">
-                <div className="flex items-center gap-2 bg-[#18181b] border border-[#27272a] rounded-lg px-2 py-1">
-                  <span className="text-[10px] text-zinc-500 font-medium">Model:</span>
-                  <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="bg-transparent text-xs font-medium text-zinc-300 focus:outline-none cursor-pointer">
-                    <option value="Gemini 1.5 Pro" className="bg-[#121214]">Gemini 1.5 Pro</option>
-                    <option value="Gemini Flash" className="bg-[#121214]">Gemini Flash</option>
-                  </select>
-                </div>
-                
-                <div className="flex items-center gap-2 bg-[#1c1c21] border border-zinc-800/80 rounded-full px-3 py-1">
-                  <Icons.Cpu />
-                  <span className="text-[11px] font-medium text-zinc-300 hidden sm:inline">Vertex AI</span>
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]"></span>
-                </div>
-
-                {/* NOTIFICATION TRIGGER BELL */}
-                <div className="relative">
-                  <button onClick={() => setShowNotifBox(!showNotifBox)} className="p-1.5 rounded-lg border border-zinc-800 bg-[#18181b] text-zinc-400 hover:text-zinc-200 relative transition-all">
-                    <Icons.Bell />
-                    {hasUnread && <span className="absolute top-1 right-1 w-2 h-2 bg-indigo-500 rounded-full"></span>}
-                  </button>
-
-                  {showNotifBox && (
-                    <div className="absolute right-0 mt-2 w-80 bg-[#121214] border border-[#27272a] rounded-xl shadow-xl overflow-hidden z-50">
-                      <div className="p-3 bg-[#161619] border-b border-[#27272a] flex justify-between items-center">
-                        <span className="text-xs font-semibold text-zinc-200">Audit History Logs</span>
-                        <button onClick={() => { setNotifications(prev => prev.map(n => ({...n, read: true}))); setShowNotifBox(false); }} className="text-[10px] text-indigo-400 hover:underline">Mark all read</button>
-                      </div>
-                      <div className="divide-y divide-zinc-800 max-h-64 overflow-y-auto">
-                        {notifications.map(n => (
-                          <div key={n.id} className={`p-3 text-[11px] transition-colors ${n.read ? 'bg-transparent text-zinc-400' : 'bg-indigo-500/5 text-zinc-200'}`}>
-                            <div className="flex justify-between items-start mb-0.5">
-                              <span className={`font-medium ${n.type === 'delete' ? 'text-rose-400' : 'text-zinc-300'}`}>
-                                {n.type === 'create' ? '📥 File Created' : '🗑️ File Removed'}
-                              </span>
-                              <span className="text-[9px] text-zinc-500 font-mono">{n.time}</span>
-                            </div>
-                            <p className="truncate">{n.text}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* TOP HEADER USER AVATAR */}
-                <div onClick={onProfileClick} className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-semibold text-xs text-white border border-zinc-700 cursor-pointer hover:scale-105 transition-transform">
-                  NK
-                </div>
-              </div>
-            </header>
-          );
-        }
-
-        // 2. LEFT SIDEBAR COMPONENT (CLICKABLE USER RE-ROUTE)
-        function Sidebar({ activeTab, setActiveTab, docCount, isMobileOpen, setIsMobileOpen, onProfileClick }) {
-          const menuItems = [
-            { name: 'Dashboard', icon: Icons.Layers },
-            { name: 'Documents', icon: Icons.FileText, count: docCount },
-            { name: 'AI Chat', icon: Icons.MessageSquare },
-            { name: 'Analytics', icon: Icons.BarChart2 },
-            { name: 'Settings', icon: Icons.Settings },
-          ];
-          return (
-            <aside className={`w-64 bg-[#121214] border-r border-[#27272a] flex flex-col justify-between fixed md:sticky top-0 h-screen z-50 transition-transform duration-200 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
-              <div>
-                <div className="h-16 flex items-center justify-between px-6 border-b border-[#27272a]">
-                  <div className="flex items-center gap-2.5">
-                    <div className="bg-gradient-to-tr from-indigo-500 to-violet-500 p-2 rounded-xl shadow-lg">
-                      <Icons.Sparkles className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <span className="font-semibold tracking-tight text-xs block text-zinc-100">LexiMind AI</span>
-                      <span className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase block">Enterprise Legal</span>
-                    </div>
-                  </div>
-                  <button onClick={() => setIsMobileOpen(false)} className="md:hidden text-zinc-500 text-xs">✕</button>
-                </div>
-                <nav className="p-4 space-y-1.5">
-                  {menuItems.map((item) => {
-                    const Icon = item.icon;
-                    const isActive = activeTab === item.name;
-                    return (
-                      <button key={item.name} 
-                        onClick={() => { setActiveTab(item.name); setIsMobileOpen(false); }}
-                        className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all group ${
-                          isActive ? 'bg-[#1e1e22] text-indigo-400 border border-zinc-800/80 shadow-sm' : 'text-zinc-400 hover:bg-[#18181b] hover:text-zinc-200'
-                        }`}>
-                        <div className="flex items-center gap-3">
-                          <Icon />
-                          <span>{item.name}</span>
-                        </div>
-                        {item.count !== undefined && (
-                          <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${isActive ? 'bg-indigo-500/10 text-indigo-400' : 'bg-zinc-800 text-zinc-500'}`}>
-                            {item.count}
-                          </span>
-                        )}
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
-              
-              {/* CLICKABLE USER PROFILE CARD SECTION */}
-              <div onClick={onProfileClick} className="p-4 border-t border-[#27272a] space-y-3 bg-[#161619] cursor-pointer hover:bg-zinc-900/60 transition-colors group">
-                <div className="flex items-center justify-between text-[10px] bg-emerald-950/20 border border-emerald-900/30 rounded-lg p-2 text-emerald-400">
-                  <div className="flex items-center gap-2">
-                    <Icons.ShieldCheck />
-                    <span>Secure OAuth Active</span>
-                  </div>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                </div>
-                <div className="flex items-center gap-3 p-1">
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-semibold text-[11px] text-white group-hover:scale-105 transition-transform">NK</div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium text-zinc-200 truncate group-hover:text-indigo-400 transition-colors">Navin Kukreja</p>
-                    <p className="text-[10px] text-zinc-500 truncate">Senior Counsel</p>
-                  </div>
-                </div>
-              </div>
-            </aside>
-          );
-        }
-
-        // 3. KPI METRICS BLOCK COMPONENT
-        function MetricsGrid() {
-          const kpis = [
-            { title: 'Documents Processed', value: '1,248', change: '+12% this week', color: 'text-indigo-400', icon: Icons.FileText },
-            { title: 'Avg Response Time', value: '1.4s', change: 'Gemini Cluster', color: 'text-cyan-400', icon: Icons.Clock },
-            { title: 'AI Accuracy Score', value: '99.4%', change: 'Human-in-loop verification', color: 'text-emerald-400', icon: Icons.CheckCircle2 },
-            { title: 'Active Legal Users', value: '42', change: 'Live nodes active', color: 'text-purple-400', icon: Icons.Database },
-          ];
-          return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {kpis.map((kpi) => {
-                const Icon = kpi.icon;
-                return (
-                  <div key={kpi.title} className="bg-[#121214] border border-[#27272a] p-4 rounded-xl shadow-sm">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">{kpi.title}</span>
-                      <Icon className={kpi.color} />
-                    </div>
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="text-xl font-semibold text-zinc-100 font-mono">{kpi.value}</span>
-                      <span className="text-[10px] text-zinc-500 truncate">{kpi.change}</span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        }
-
-        // 4. WORKFLOW DOCUMENT MANAGEMENT INTERFACES (REAL DRAG & DROP)
-        function DocumentWorkbench({ documents, onUploadStart, isUploading, uploadProgress, currentUploadingName, onDeleteDoc }) {
-          const fileInputRef = React.useRef(null);
-
-          const processFile = (file) => {
-            if (!file) return;
-            onUploadStart({
-              name: file.name,
-              size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-              date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-            });
-          };
-
-          return (
-            <div className="space-y-4">
-              <div className="bg-[#121214] border border-[#27272a] rounded-xl p-5 space-y-4 shadow-sm">
-                <div>
-                  <h3 className="text-xs font-semibold text-zinc-200">Ingest New Contracts</h3>
-                  <p className="text-[11px] text-zinc-500">Upload agreements to index them into the Vertex AI Vector DB cluster.</p>
-                </div>
-
-                <input type="file" ref={fileInputRef} className="hidden" accept=".pdf,.txt,.doc,.docx" onChange={(e) => processFile(e.target.files[0])} />
-
-                <div 
-                  onClick={() => fileInputRef.current.click()}
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => { e.preventDefault(); processFile(e.dataTransfer.files[0]); }}
-                  className="border border-dashed border-zinc-800 hover:border-indigo-500/50 bg-[#161619]/40 rounded-xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all group"
-                >
-                  <Icons.UploadCloud />
-                  <p className="text-xs text-zinc-300 font-medium group-hover:text-indigo-400 transition-colors">Drag & drop local files here, or click to browse</p>
-                  <p className="text-[10px] text-zinc-500">Supports PDF, TXT, DOCX. Live OCR parsing active.</p>
-                </div>
-
-                {isUploading && (
-                  <div className="bg-[#18181b] border border-zinc-800/60 rounded-lg p-3">
-                    <div className="flex items-center justify-between text-[11px] mb-1.5">
-                      <div className="flex items-center gap-2 text-zinc-300">
-                        <Icons.RefreshCw className="text-indigo-400 animate-spin w-3 h-3" />
-                        <span className="font-medium truncate max-w-[220px]">{currentUploadingName}</span>
-                      </div>
-                      <span className="text-zinc-400 font-mono">{uploadProgress}%</span>
-                    </div>
-                    <div className="w-full bg-zinc-900 h-1 rounded-full overflow-hidden">
-                      <div className="bg-indigo-500 h-full rounded-full transition-all duration-150" style={{ width: `${uploadProgress}%` }}></div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="bg-[#121214] border border-[#27272a] rounded-xl overflow-hidden shadow-sm">
-                <div className="p-4 border-b border-[#27272a]"><h3 className="text-xs font-semibold text-zinc-200">Active Document Repository</h3></div>
-                <div className="divide-y divide-[#27272a]">
-                  {documents.map((doc) => (
-                    <div key={doc.id} className="p-3.5 flex items-center justify-between hover:bg-[#161619]/60 transition-colors group">
-                      <div className="flex items-center gap-3">
-                        <Icons.FileText />
-                        <div>
-                          <p className="text-xs font-medium text-zinc-200 truncate max-w-[240px] sm:max-w-xs">{doc.name}</p>
-                          <p className="text-[10px] text-zinc-500">{doc.size} • {doc.date}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        {doc.status === 'Indexed' && <span className="text-[10px] bg-emerald-950/30 text-emerald-400 border border-emerald-900/40 px-2 py-0.5 rounded-md font-medium">Indexed</span>}
-                        {doc.status === 'Failed' && <span className="text-[10px] bg-rose-950/30 text-rose-400 border border-rose-900/40 px-2 py-0.5 rounded-md font-medium">Failed</span>}
-                        <button onClick={() => onDeleteDoc(doc.id, doc.name)} className="text-zinc-600 hover:text-rose-400 text-xs px-2 transition-colors opacity-0 group-hover:opacity-100">✕</button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          );
-        }
-
-        // 5. INTEL ROUTING CHAT ENGINE
-        function ChatPanel({ selectedModel, isStandalone }) {
-          const [messages, setMessages] = React.useState([
-            { sender: 'user', text: 'What are the key risks in this contract?', time: '1:52 PM' },
-            { sender: 'ai', text: 'Based on my analysis of the uploaded Master Services Agreement via the Vertex AI pipeline, I have identified the following critical legal risks:', 
-              bullets: [
-                'Termination clause requires an asymmetrical 90-day notice.',
-                'Vendor liability cap is undefined and open to uncapped damages.',
-                'No explicit data retention limitation found post contract termination.',
-                'Missing standard confidentiality duration survival terms.'
-              ], time: '1:52 PM' }
-          ]);
-          const [inputMessage, setInputMessage] = React.useState('');
-          const [isTyping, setIsTyping] = React.useState(false);
-
-          const suggestedPrompts = [
-            { label: 'Summarize Contract', text: 'Can you summarize this contract?' },
-            { label: 'Find Termination Clauses', text: 'Find termination clauses' },
-            { label: 'Highlight Payments', text: 'Highlight payment obligations' },
-            { label: 'List Compliance Risks', text: 'List compliance risks' }
-          ];
-
-          const handleSend = (userText) => {
-            if (!userText.trim()) return;
-            setMessages(prev => [...prev, { sender: 'user', text: userText, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]);
-            setInputMessage('');
-            setIsTyping(true);
-
-            setTimeout(() => {
-              setIsTyping(false);
-              const cleanText = userText.toLowerCase();
-              let aiReply = { sender: 'ai', text: '', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) };
-
-              if (cleanText.includes('summary') || cleanText.includes('summarize')) {
-                aiReply.text = `Here is the executive summary generated by ${selectedModel}:`;
-                aiReply.bullets = [
-                  'Agreement Type: Master Services Framework.',
-                  'Scope: Enterprise software deployments and integration mapping.',
-                  'Ownership: Complete infrastructure core remains vendor intellectual property.'
-                ];
-              } else if (cleanText.includes('termination') || cleanText.includes('clause')) {
-                aiReply.text = `Analysis of termination frameworks under active context:`;
-                aiReply.bullets = [
-                  'Section 14.2: Termination is permissible via 90-day explicit written notices.',
-                  'Breach Window: Standard 30-day structural remediation windows apply.'
-                ];
-              } else if (cleanText.includes('compliance') || cleanText.includes('risk')) {
-                aiReply.text = `Compliance auditing vectors identified:`;
-                aiReply.bullets = [
-                  'Data Laws: Cross-border metadata handling bounds are ambiguously logged.',
-                  'Audit Frequency: Bound strictly to single-annual inspections.'
-                ];
-              } else {
-                aiReply.text = `Query synthesized against active pipeline vectors using ${selectedModel}. The syntax adheres cleanly to foundational legal templates with no distinct critical operational overrides required.`;
-              }
-
-              setMessages(prev => [...prev, aiReply]);
-            }, 1100);
-          };
-
-          return (
-            <div className={`bg-[#121214] border border-[#27272a] rounded-xl flex flex-col overflow-hidden shadow-sm ${isStandalone ? 'h-[calc(100vh-11rem)]' : 'h-[calc(100vh-15.5rem)]'}`}>
-              <div className="p-4 border-b border-[#27272a] bg-[#161619] flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-                  <span className="text-xs font-semibold text-zinc-200">Gemini Review Engine</span>
-                </div>
-                <span className="text-[10px] text-indigo-400 font-mono bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">{selectedModel}</span>
-              </div>
-              
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {messages.map((msg, i) => (
-                  <div key={i} className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
-                    <div className={`text-xs p-3.5 rounded-xl max-w-[90%] border ${
-                      msg.sender === 'user' ? 'bg-indigo-600 border-indigo-500 text-white rounded-br-none' : 'bg-[#18181b] border-zinc-800 text-zinc-200 rounded-bl-none'
-                    }`}>
-                      <p className="leading-relaxed">{msg.text}</p>
-                      {msg.bullets && (
-                        <ul className="mt-2.5 space-y-1.5 list-disc pl-4 text-zinc-300 border-t border-zinc-800/80 pt-2">
-                          {msg.bullets.map((b, idx) => <li key={idx} className="marker:text-indigo-400">{b}</li>)}
-                        </ul>
-                      )}
-                    </div>
-                  </div>
-                ))}
-                {isTyping && (
-                  <div className="flex items-center gap-2 text-[10px] text-zinc-500 bg-zinc-900/40 px-3 py-2 border border-zinc-800 rounded-lg w-max animate-pulse">
-                    <Icons.RefreshCw className="animate-spin text-indigo-400 w-3 h-3" />
-                    <span>Gemini calculations ongoing...</span>
-                  </div>
-                )}
-              </div>
-
-              <div className="p-2 bg-[#141417] border-t border-[#27272a] flex gap-2 overflow-x-auto no-scrollbar">
-                {suggestedPrompts.map((p) => (
-                  <button key={p.label} onClick={() => handleSend(p.text)}
-                    className="text-[10px] font-medium text-zinc-400 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:text-zinc-200 px-2.5 py-1.5 rounded-lg whitespace-nowrap transition-colors flex items-center gap-1">
-                    {p.label} <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                  </button>
-                ))}
-              </div>
-
-              <div className="p-3 bg-[#161619] border-t border-[#27272a] flex gap-2 items-center mt-auto">
-                <button className="text-zinc-500 hover:text-zinc-300 px-1"><Icons.Paperclip /></button>
-                <input type="text" value={inputMessage} 
-                  onChange={(e) => setInputMessage(e.target.value)} 
-                  onKeyDown={(e) => e.key === 'Enter' && handleSend(inputMessage)}
-                  placeholder="Ask Gemini to extract clauses or map liabilities..." 
-                  className="w-full bg-[#1c1c1f] text-xs text-zinc-200 p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-indigo-500" />
-                <button onClick={() => handleSend(inputMessage)} className="bg-indigo-600 hover:bg-indigo-500 text-white p-2.5 rounded-lg text-xs font-medium transition-all shadow-md"><Icons.Send /></button>
-              </div>
-            </div>
-          );
-        }
-
-        function AnalyticsView() {
-          return (
-            <div className="bg-[#121214] border border-[#27272a] rounded-xl p-6 space-y-4 shadow-sm">
-              <div>
-                <h3 className="text-sm font-semibold text-zinc-200">System Performance Telemetry</h3>
-                <p className="text-xs text-zinc-500">Live operational monitoring of your deployed Vertex AI container models.</p>
-              </div>
-              <div className="h-48 border border-zinc-800 bg-zinc-900/30 rounded-xl flex items-end p-4 gap-3 justify-around">
-                {[45, 60, 32, 75, 90, 65, 85, 50, 95, 70].map((h, i) => (
-                  <div key={i} className="w-full bg-gradient-to-t from-indigo-600 to-violet-500 rounded-t animate-pulse" style={{ height: `${h}%`, animationDelay: `${i*100}ms` }}></div>
-                ))}
-              </div>
-            </div>
-          );
-        }
-
-        function SettingsView({ selectedModel, setSelectedModel }) {
-          const [ocrActive, setOcrActive] = React.useState(true);
-          return (
-            <div className="bg-[#121214] border border-[#27272a] rounded-xl p-6 space-y-5 shadow-sm">
-              <div>
-                <h3 className="text-sm font-semibold text-zinc-200">Global Engine Configurations</h3>
-                <p className="text-xs text-zinc-500">Configure your security boundaries and pipeline weights.</p>
-              </div>
-              <div className="space-y-4 divide-y divide-zinc-800/60">
-                <div className="flex items-center justify-between pt-2">
-                  <div>
-                    <label className="text-xs font-medium text-zinc-300 block">Default LLM Orchestrator</label>
-                  </div>
-                  <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="bg-zinc-900 border border-zinc-800 text-xs rounded-lg p-2 text-zinc-300">
-                    <option value="Gemini 1.5 Pro">Gemini 1.5 Pro</option>
-                    <option value="Gemini Flash">Gemini Flash</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          );
-        }
-
-        // 6. MAIN CENTRAL MANAGEMENT CONTROLLER (WITH MODAL AND NOTIFICATION STATE)
-        function App() {
-          const [activeTab, setActiveTab] = React.useState('Dashboard');
-          const [selectedModel, setSelectedModel] = React.useState('Gemini 1.5 Pro');
-          const [isMobileSidebarOpen, setIsMobileSidebarOpen] = React.useState(false);
-          const [showProfileModal, setShowProfileModal] = React.useState(false);
-          
-          const [isUploading, setIsUploading] = React.useState(false);
-          const [uploadProgress, setUploadProgress] = React.useState(0);
-          const [currentUploadingName, setCurrentUploadingName] = React.useState('');
-          
-          const [notifications, setNotifications] = React.useState([
-            { id: 1, text: "Navin Kukreja initialized the secure sandbox.", time: "10 mins ago", type: "create", read: false },
-            { id: 2, text: "Data_Processing_Addendum_v4.pdf was parsed via OCR.", time: "1 hr ago", type: "create", read: true }
-          ]);
-          
-          const [documents, setDocuments] = React.useState([
-            { id: 1, name: 'MSLA_Vendor_Agreement_2026.pdf', size: '2.4 MB', date: 'May 24, 2026', status: 'Indexed' },
-            { id: 2, name: 'Data_Processing_Addendum_v4.pdf', size: '1.1 MB', date: 'May 25, 2026', status: 'Indexed' },
-            { id: 3, name: 'NDA_Executive_Search_Draft.pdf', size: '420 KB', date: 'May 26, 2026', status: 'Failed' },
-          ]);
-
-          const handleNewUpload = (meta) => {
-            if (isUploading) return;
-            setCurrentUploadingName(meta.name);
-            setIsUploading(true);
-            setUploadProgress(0);
-
-            const interval = setInterval(() => {
-              setUploadProgress((oldProgress) => {
-                if (oldProgress >= 100) {
-                  clearInterval(interval);
-                  setIsUploading(false);
-                  setDocuments(prev => [{ id: Date.now(), name: meta.name, size: meta.size, date: meta.date, status: 'Indexed' }, ...prev]);
-                  setNotifications(prev => [{ id: Date.now(), text: `${meta.name} uploaded by Navin Kukreja.`, time: "Just Now", type: "create", read: false }, ...prev]);
-                  return 100;
-                }
-                return oldProgress + 20;
-              });
-            }, 100);
-          };
-
-          const handleDeleteDocument = (id, name) => {
-            setDocuments(prev => prev.filter(doc => doc.id !== id));
-            setNotifications(prev => [{ id: Date.now(), text: `${name} deleted from workspace storage.`, time: "Just Now", type: "delete", read: false }, ...prev]);
-          };
-
-          return (
-            <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex overflow-hidden w-full relative">
-              <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} docCount={documents.length} isMobileOpen={isMobileSidebarOpen} setIsMobileOpen={setIsMobileSidebarOpen} onProfileClick={() => setShowProfileModal(true)} />
-              
-              <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-                <Header selectedModel={selectedModel} setSelectedModel={setSelectedModel} onToggleSidebar={() => setIsMobileSidebarOpen(true)} onProfileClick={() => setShowProfileModal(true)} notifications={notifications} setNotifications={setNotifications} />
-                
-                <main className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
-                  {activeTab === 'Dashboard' && (
-                    <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-                      <div className="xl:col-span-12"><MetricsGrid /></div>
-                      <div className="xl:col-span-7"><DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} /></div>
-                      <div className="xl:col-span-5 space-y-4">
-                        <ChatPanel selectedModel={selectedModel} isStandalone={false} />
-                      </div>
-                    </div>
-                  )}
-
-                  {activeTab === 'Documents' && (
-                    <div className="max-w-4xl mx-auto w-full">
-                      <DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} />
-                    </div>
-                  )}
-
-                  {activeTab === 'AI Chat' && (
-                    <div className="max-w-4xl mx-auto w-full"><ChatPanel selectedModel={selectedModel} isStandalone={true} /></div>
-                  )}
-
-                  {activeTab === 'Analytics' && (
-                    <div className="max-w-4xl mx-auto space-y-6 w-full"><MetricsGrid /><AnalyticsView /></div>
-                  )}
-
-                  {activeTab === 'Settings' && (
-                    <div className="max-w-2xl mx-auto w-full"><SettingsView selectedModel={selectedModel} setSelectedModel={setSelectedModel} /></div>
-                  )}
-                </main>
-              </div>
-
-              {/* INTERACTIVE MODAL COMPONENT (TRIGGERED PROFILE DIALOG) */}
-              {showProfileModal && (
-                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                  <div className="bg-[#121214] border border-[#27272a] rounded-xl max-w-sm w-full p-6 space-y-4 relative">
-                    <button onClick={() => setShowProfileModal(false)} className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-300">✕</button>
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-bold text-sm text-white">NK</div>
-                      <div>
-                        <h4 className="font-semibold text-zinc-100 text-sm">Navin Kukreja</h4>
-                        <p className="text-xs text-zinc-500">Indore Cluster Sandbox Office</p>
-                      </div>
-                    </div>
-                    <div className="bg-zinc-900/60 rounded-lg p-3 border border-zinc-800 text-[11px] font-mono space-y-1.5 text-zinc-400">
-                      <div><span className="text-zinc-500">Security Access:</span> Tier-1 Legal Counsel</div>
-                      <div><span className="text-zinc-500">Active API Session:</span> live_tok_48227a</div>
-                      <div><span className="text-zinc-500">Region Routing:</span> Asia-South1 (Indore Node)</div>
-                    </div>
-                    <button onClick={() => setShowProfileModal(false)} className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-lg text-xs font-medium transition-colors">Close Profile Panel</button>
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        }
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-</body>
-</html> -->
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1091,6 +532,597 @@
                         <DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} searchQuery={searchQuery} />
                       </div>
                       <div className="xl:col-span-5 space-y-4">
+                        <ChatPanel selectedModel={selectedModel} isStandalone={false} />
+                      </div>
+                    </div>
+                  )}
+
+                  {activeTab === 'Documents' && (
+                    <div className="max-w-4xl mx-auto w-full">
+                      <DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} searchQuery={searchQuery} />
+                    </div>
+                  )}
+
+                  {activeTab === 'AI Chat' && (
+                    <div className="max-w-4xl mx-auto w-full"><ChatPanel selectedModel={selectedModel} isStandalone={true} /></div>
+                  )}
+
+                  {activeTab === 'Analytics' && (
+                    <div className="max-w-4xl mx-auto space-y-6 w-full"><MetricsGrid /><AnalyticsView /></div>
+                  )}
+
+                  {activeTab === 'Settings' && (
+                    <div className="max-w-2xl mx-auto w-full"><SettingsView selectedModel={selectedModel} setSelectedModel={setSelectedModel} /></div>
+                  )}
+                </main>
+              </div>
+
+              {/* MODAL CONFIG */}
+              {showProfileModal && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                  <div className="bg-[#121214] border border-[#27272a] rounded-xl max-w-sm w-full p-6 space-y-4 relative">
+                    <button onClick={() => setShowProfileModal(false)} className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-300">✕</button>
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-bold text-sm text-white">NK</div>
+                      <div>
+                        <h4 className="font-semibold text-zinc-100 text-sm">Navin Kukreja</h4>
+                        <p className="text-xs text-zinc-500">Senior Legal Counsel</p>
+                      </div>
+                    </div>
+                    <div className="bg-zinc-900/60 rounded-lg p-3 border border-zinc-800 text-[11px] font-mono space-y-1.5 text-zinc-400">
+                      <div><span className="text-zinc-500">Security Access:</span> Tier-1 Legal Counsel</div>
+                      <div><span className="text-zinc-500">Active API Session:</span> live_tok_48227a</div>
+                    </div>
+                    <button onClick={() => setShowProfileModal(false)} className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-lg text-xs font-medium transition-colors">Close Profile Panel</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexiMind AI - Enterprise Legal Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #09090b; color: #fafafa; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #121214; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Custom Inline SVG Component Map for 100% Stability
+        const Icons = {
+          Layers: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>,
+          FileText: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>,
+          MessageSquare: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>,
+          BarChart2: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>,
+          Settings: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>,
+          ShieldCheck: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 11l2 2 4-4"/></svg>,
+          Sparkles: ({className}) => <svg className={className || "w-4 h-4"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>,
+          Search: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>,
+          Cpu: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>,
+          UploadCloud: () => <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>,
+          CheckCircle2: ({className}) => <svg className={className || "w-3 h-3"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>,
+          RefreshCw: ({className}) => <svg className={className || "w-3 h-3"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 11-.57-8.38l5.67-5.67"/></svg>,
+          Clock: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>,
+          Database: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>,
+          ArrowUpRight: () => <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>,
+          Send: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>,
+          Paperclip: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>,
+          Menu: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>,
+          Bell: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        };
+
+        // 1. HEADER COMPONENT WITH FIXED ALIGNED SEARCH TERMINAL CONNECTIONS
+        function Header({ selectedModel, setSelectedModel, onToggleSidebar, onProfileClick, notifications, setNotifications, searchQuery, setSearchQuery }) {
+          const [showNotifBox, setShowNotifBox] = React.useState(false);
+          const hasUnread = notifications.some(n => !n.read);
+
+          return (
+            <header className="h-16 border-b border-[#27272a] bg-[#121214]/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40 relative gap-4">
+              <div className="flex items-center gap-3 flex-1 max-w-md min-w-0">
+                <button onClick={onToggleSidebar} className="md:hidden text-zinc-400 hover:text-zinc-200 p-1 flex-shrink-0">
+                  <Icons.Menu />
+                </button>
+                
+                {/* DYNAMIC RESPONSIVE FIXED SEARCH BAR AND ICON CONNECTIONS */}
+                <div className="relative w-full">
+                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                    <Icons.Search className="h-3.5 w-3.5 text-zinc-500" />
+                  </div>
+                  <input 
+                    type="text" 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search files..." 
+                    className="w-full bg-[#18181b] border border-[#27272a] rounded-lg pl-10 pr-4 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 transition-colors truncate" 
+                  />
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0 ml-auto relative">
+                <div className="flex items-center gap-2 bg-[#18181b] border border-[#27272a] rounded-lg px-2 py-1">
+                  <span className="text-[10px] text-zinc-500 font-medium hidden sm:inline">Model:</span>
+                  <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="bg-transparent text-xs font-medium text-zinc-300 focus:outline-none cursor-pointer">
+                    <option value="Gemini 1.5 Pro" className="bg-[#121214]">Gemini 1.5 Pro</option>
+                    <option value="Gemini Flash" className="bg-[#121214]">Gemini Flash</option>
+                  </select>
+                </div>
+                
+                <div className="hidden xs:flex items-center gap-2 bg-[#1c1c21] border border-zinc-800/80 rounded-full px-3 py-1">
+                  <Icons.Cpu />
+                  <span className="text-[11px] font-medium text-zinc-300 hidden sm:inline">Vertex AI</span>
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]"></span>
+                </div>
+
+                <div className="relative">
+                  <button onClick={() => setShowNotifBox(!showNotifBox)} className="p-1.5 rounded-lg border border-zinc-800 bg-[#18181b] text-zinc-400 hover:text-zinc-200 relative transition-all">
+                    <Icons.Bell />
+                    {hasUnread && <span className="absolute top-1 right-1 w-2 h-2 bg-indigo-500 rounded-full"></span>}
+                  </button>
+
+                  {showNotifBox && (
+                    <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-[#121214] border border-[#27272a] rounded-xl shadow-xl overflow-hidden z-50">
+                      <div className="p-3 bg-[#161619] border-b border-[#27272a] flex justify-between items-center">
+                        <span className="text-xs font-semibold text-zinc-200">Audit History Logs</span>
+                        <button onClick={() => { setNotifications(prev => prev.map(n => ({...n, read: true}))); setShowNotifBox(false); }} className="text-[10px] text-indigo-400 hover:underline">Mark all read</button>
+                      </div>
+                      <div className="divide-y divide-zinc-800 max-h-64 overflow-y-auto">
+                        {notifications.map(n => (
+                          <div key={n.id} className={`p-3 text-[11px] transition-colors ${n.read ? 'bg-transparent text-zinc-400' : 'bg-indigo-500/5 text-zinc-200'}`}>
+                            <div className="flex justify-between items-start mb-0.5">
+                              <span className={`font-medium ${n.type === 'delete' ? 'text-rose-400' : 'text-zinc-300'}`}>
+                                {n.type === 'create' ? '📥 File Created' : '🗑️ File Removed'}
+                              </span>
+                              <span className="text-[9px] text-zinc-500 font-mono">{n.time}</span>
+                            </div>
+                            <p className="truncate">{n.text}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div onClick={onProfileClick} className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-semibold text-xs text-white border border-zinc-700 cursor-pointer hover:scale-105 transition-transform flex-shrink-0">
+                  NK
+                </div>
+              </div>
+            </header>
+          );
+        }
+
+        // 2. LEFT SIDEBAR COMPONENT
+        function Sidebar({ activeTab, setActiveTab, docCount, isMobileOpen, setIsMobileOpen, onProfileClick }) {
+          const menuItems = [
+            { name: 'Dashboard', icon: Icons.Layers },
+            { name: 'Documents', icon: Icons.FileText, count: docCount },
+            { name: 'AI Chat', icon: Icons.MessageSquare },
+            { name: 'Analytics', icon: Icons.BarChart2 },
+            { name: 'Settings', icon: Icons.Settings },
+          ];
+          return (
+            <React.Fragment>
+              {isMobileOpen && <div onClick={() => setIsMobileOpen(false)} className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40 md:hidden" />}
+              <aside className={`w-64 bg-[#121214] border-r border-[#27272a] flex flex-col justify-between fixed md:sticky top-0 h-screen z-50 transition-transform duration-300 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+                <div>
+                  <div className="h-16 flex items-center justify-between px-6 border-b border-[#27272a]">
+                    <div className="flex items-center gap-2.5">
+                      <div className="bg-gradient-to-tr from-indigo-500 to-violet-500 p-2 rounded-xl shadow-lg">
+                        <Icons.Sparkles className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <span className="font-semibold tracking-tight text-xs block text-zinc-100">LexiMind AI</span>
+                        <span className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase block">Enterprise Legal</span>
+                      </div>
+                    </div>
+                    <button onClick={() => setIsMobileOpen(false)} className="md:hidden text-zinc-500 text-sm p-1.5">✕</button>
+                  </div>
+                  <nav className="p-4 space-y-1.5">
+                    {menuItems.map((item) => {
+                      const Icon = item.icon;
+                      const isActive = activeTab === item.name;
+                      return (
+                        <button key={item.name} 
+                          onClick={() => { setActiveTab(item.name); setIsMobileOpen(false); }}
+                          className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all group ${
+                            isActive ? 'bg-[#1e1e22] text-indigo-400 border border-zinc-800/80 shadow-sm' : 'text-zinc-400 hover:bg-[#18181b] hover:text-zinc-200'
+                          }`}>
+                          <div className="flex items-center gap-3">
+                            <Icon />
+                            <span>{item.name}</span>
+                          </div>
+                          {item.count !== undefined && (
+                            <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${isActive ? 'bg-indigo-500/10 text-indigo-400' : 'bg-zinc-800 text-zinc-500'}`}>
+                              {item.count}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </nav>
+                </div>
+                
+                <div onClick={onProfileClick} className="p-4 border-t border-[#27272a] space-y-3 bg-[#161619] cursor-pointer hover:bg-zinc-900/60 transition-colors group">
+                  <div className="flex items-center justify-between text-[10px] bg-emerald-950/20 border border-emerald-900/30 rounded-lg p-2 text-emerald-400">
+                    <div className="flex items-center gap-2">
+                      <Icons.ShieldCheck />
+                      <span>Secure OAuth Active</span>
+                    </div>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  </div>
+                  <div className="flex items-center gap-3 p-1">
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-semibold text-[11px] text-white group-hover:scale-105 transition-transform">NK</div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium text-zinc-200 truncate group-hover:text-indigo-400 transition-colors">Navin Kukreja</p>
+                      <p className="text-[10px] text-zinc-500 truncate">Senior Counsel</p>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </React.Fragment>
+          );
+        }
+
+        // 3. KPI METRICS BLOCK COMPONENT
+        function MetricsGrid() {
+          const kpis = [
+            { title: 'Documents Processed', value: '1,248', change: '+12% this week', color: 'text-indigo-400', icon: Icons.FileText },
+            { title: 'Avg Response Time', value: '1.4s', change: 'Gemini Cluster', color: 'text-cyan-400', icon: Icons.Clock },
+            { title: 'AI Accuracy Score', value: '99.4%', change: 'Human-in-loop verification', color: 'text-emerald-400', icon: Icons.CheckCircle2 },
+            { title: 'Active Legal Users', value: '42', change: 'Live nodes active', color: 'text-purple-400', icon: Icons.Database },
+          ];
+          return (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+              {kpis.map((kpi) => {
+                const Icon = kpi.icon;
+                return (
+                  <div key={kpi.title} className="bg-[#121214] border border-[#27272a] p-4 rounded-xl shadow-sm">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">{kpi.title}</span>
+                      <Icon className={kpi.color} />
+                    </div>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-xl font-semibold text-zinc-100 font-mono">{kpi.value}</span>
+                      <span className="text-[10px] text-zinc-500 truncate">{kpi.change}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }
+
+        // 4. WORKFLOW DOCUMENT INTERFACE WITH EMBEDDED DYNAMIC SEARCH FILTERS
+        function DocumentWorkbench({ documents, onUploadStart, isUploading, uploadProgress, currentUploadingName, onDeleteDoc, searchQuery }) {
+          const fileInputRef = React.useRef(null);
+
+          const processFile = (file) => {
+            if (!file) return;
+            onUploadStart({
+              name: file.name,
+              size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
+              date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            });
+          };
+
+          const filteredDocs = documents.filter(doc => 
+            doc.name.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+
+          return (
+            <div className="space-y-4 w-full">
+              <div className="bg-[#121214] border border-[#27272a] rounded-xl p-4 sm:p-5 space-y-4 shadow-sm">
+                <div>
+                  <h3 className="text-xs font-semibold text-zinc-200">Ingest New Contracts</h3>
+                  <p className="text-[11px] text-zinc-500">Upload agreements to index them into the Vertex AI Vector DB cluster.</p>
+                </div>
+
+                <input type="file" ref={fileInputRef} className="hidden" accept=".pdf,.txt,.doc,.docx" onChange={(e) => processFile(e.target.files[0])} />
+
+                <div 
+                  onClick={() => fileInputRef.current.click()}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => { e.preventDefault(); processFile(e.dataTransfer.files[0]); }}
+                  className="border border-dashed border-zinc-800 hover:border-indigo-500/50 bg-[#161619]/40 rounded-xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all group text-center"
+                >
+                  <Icons.UploadCloud />
+                  <p className="text-xs text-zinc-300 font-medium group-hover:text-indigo-400 transition-colors">Drag & drop local files here, or click to browse</p>
+                  <p className="text-[10px] text-zinc-500">Supports PDF, TXT, DOCX. Live OCR parsing active.</p>
+                </div>
+
+                {isUploading && (
+                  <div className="bg-[#18181b] border border-zinc-800/60 rounded-lg p-3">
+                    <div className="flex items-center justify-between text-[11px] mb-1.5">
+                      <div className="flex items-center gap-2 text-zinc-300 min-w-0">
+                        <Icons.RefreshCw className="text-indigo-400 animate-spin w-3 h-3 flex-shrink-0" />
+                        <span className="font-medium truncate">{currentUploadingName}</span>
+                      </div>
+                      <span className="text-zinc-400 font-mono ml-2">{uploadProgress}%</span>
+                    </div>
+                    <div className="w-full bg-zinc-900 h-1 rounded-full overflow-hidden">
+                      <div className="bg-indigo-500 h-full rounded-full transition-all duration-150" style={{ width: `${uploadProgress}%` }}></div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="bg-[#121214] border border-[#27272a] rounded-xl overflow-hidden shadow-sm w-full">
+                <div className="p-4 border-b border-[#27272a] flex items-center justify-between flex-wrap gap-2">
+                  <h3 className="text-xs font-semibold text-zinc-200">Active Document Repository</h3>
+                  {searchQuery && (
+                    <span className="text-[10px] bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded text-indigo-400 font-mono truncate max-w-[180px]">
+                      Filtering: "{searchQuery}"
+                    </span>
+                  )}
+                </div>
+                
+                <div className="divide-y divide-[#27272a] overflow-x-auto w-full">
+                  {filteredDocs.length > 0 ? (
+                    filteredDocs.map((doc) => (
+                      <div key={doc.id} className="p-3.5 flex items-center justify-between hover:bg-[#161619]/60 transition-colors group min-w-[280px]">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="flex-shrink-0"><Icons.FileText /></div>
+                          <div className="min-w-0">
+                            <p className="text-xs font-medium text-zinc-200 truncate pr-2 max-w-[180px] sm:max-w-xs md:max-w-sm lg:max-w-md">{doc.name}</p>
+                            <p className="text-[10px] text-zinc-500">{doc.size} • {doc.date}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0 ml-2">
+                          {doc.status === 'Indexed' && <span className="text-[10px] bg-emerald-950/30 text-emerald-400 border border-emerald-900/40 px-2 py-0.5 rounded-md font-medium">Indexed</span>}
+                          {doc.status === 'Failed' && <span className="text-[10px] bg-rose-950/30 text-rose-400 border border-rose-900/40 px-2 py-0.5 rounded-md font-medium">Failed</span>}
+                          <button onClick={() => onDeleteDoc(doc.id, doc.name)} className="text-zinc-600 hover:text-rose-400 text-xs px-2 transition-colors opacity-100 sm:opacity-0 group-hover:opacity-100">✕</button>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-8 text-center text-zinc-500 text-xs italic">
+                      No matching files indexed in the active vector space.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        // 5. GEMINI DYNAMIC CHAT PANEL INTERFACE
+        function ChatPanel({ selectedModel, isStandalone }) {
+          const [messages, setMessages] = React.useState([
+            { sender: 'user', text: 'What are the key risks in this contract?', time: '1:52 PM' },
+            { sender: 'ai', text: 'Based on my analysis of the uploaded Master Services Agreement via the Vertex AI pipeline, I have identified the following critical legal risks:', 
+              bullets: [
+                'Termination clause requires an asymmetrical 90-day notice.',
+                'Vendor liability cap is undefined and open to uncapped damages.',
+                'No explicit data retention limitation found post contract termination.',
+                'Missing standard confidentiality duration survival terms.'
+              ], time: '1:52 PM' }
+          ]);
+          const [inputMessage, setInputMessage] = React.useState('');
+          const [isTyping, setIsTyping] = React.useState(false);
+
+          const suggestedPrompts = [
+            { label: 'Summarize Contract', text: 'Can you summarize this contract?' },
+            { label: 'Find Termination Clauses', text: 'Find termination clauses' },
+            { label: 'Highlight Payments', text: 'Highlight payment obligations' },
+            { label: 'List Compliance Risks', text: 'List compliance risks' }
+          ];
+
+          const handleSend = (userText) => {
+            if (!userText.trim()) return;
+            setMessages(prev => [...prev, { sender: 'user', text: userText, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]);
+            setInputMessage('');
+            setIsTyping(true);
+
+            setTimeout(() => {
+              setIsTyping(false);
+              const cleanText = userText.toLowerCase();
+              let aiReply = { sender: 'ai', text: '', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) };
+
+              if (cleanText.includes('summary') || cleanText.includes('summarize')) {
+                aiReply.text = `Here is the executive summary generated by ${selectedModel}:`;
+                aiReply.bullets = [
+                  'Agreement Type: Master Services Framework.',
+                  'Scope: Enterprise software deployments and integration mapping.',
+                  'Ownership: Complete infrastructure core remains vendor intellectual property.'
+                ];
+              } else if (cleanText.includes('termination') || cleanText.includes('clause')) {
+                aiReply.text = `Analysis of termination frameworks under active context:`;
+                aiReply.bullets = [
+                  'Section 14.2: Termination is permissible via 90-day explicit written notices.',
+                  'Breach Window: Standard 30-day structural remediation windows apply.'
+                ];
+              } else if (cleanText.includes('compliance') || cleanText.includes('risk')) {
+                aiReply.text = `Compliance auditing vectors identified:`;
+                aiReply.bullets = [
+                  'Data Laws: Cross-border metadata handling bounds are ambiguously logged.',
+                  'Audit Frequency: Bound strictly to single-annual inspections.'
+                ];
+              } else {
+                aiReply.text = `Query processed using ${selectedModel}. The syntax balances commercially viable enterprise templates with no critical risk parameters observed for this block.`;
+              }
+
+              setMessages(prev => [...prev, aiReply]);
+            }, 1100);
+          };
+
+          return (
+            <div className={`bg-[#121214] border border-[#27272a] rounded-xl flex flex-col overflow-hidden shadow-sm w-full ${isStandalone ? 'h-[calc(100vh-11rem)]' : 'h-[500px] xl:h-[calc(100vh-15.5rem)]'}`}>
+              <div className="p-4 border-b border-[#27272a] bg-[#161619] flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                  <span className="text-xs font-semibold text-zinc-200">Gemini Review Engine</span>
+                </div>
+                <span className="text-[10px] text-indigo-400 font-mono bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">{selectedModel}</span>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                {messages.map((msg, i) => (
+                  <div key={i} className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
+                    <div className={`text-xs p-3.5 rounded-xl max-w-[90%] border ${
+                      msg.sender === 'user' ? 'bg-indigo-600 border-indigo-500 text-white rounded-br-none' : 'bg-[#18181b] border-zinc-800 text-zinc-200 rounded-bl-none'
+                    }`}>
+                      <p className="leading-relaxed">{msg.text}</p>
+                      {msg.bullets && (
+                        <ul className="mt-2.5 space-y-1.5 list-disc pl-4 text-zinc-300 border-t border-zinc-800/80 pt-2">
+                          {msg.bullets.map((b, idx) => <li key={idx} className="marker:text-indigo-400">{b}</li>)}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                ))}
+                {isTyping && (
+                  <div className="flex items-center gap-2 text-[10px] text-zinc-500 bg-zinc-900/40 px-3 py-2 border border-zinc-800 rounded-lg w-max animate-pulse">
+                    <Icons.RefreshCw className="animate-spin text-indigo-400 w-3 h-3" />
+                    <span>Gemini processing token sequences...</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="p-2 bg-[#141417] border-t border-[#27272a] flex gap-2 overflow-x-auto no-scrollbar">
+                {suggestedPrompts.map((p) => (
+                  <button key={p.label} onClick={() => handleSend(p.text)}
+                    className="text-[10px] font-medium text-zinc-400 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:text-zinc-200 px-2.5 py-1.5 rounded-lg whitespace-nowrap transition-colors flex items-center gap-1">
+                    {p.label} <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                  </button>
+                ))}
+              </div>
+
+              <div className="p-3 bg-[#161619] border-t border-[#27272a] flex gap-2 items-center mt-auto">
+                <button className="text-zinc-500 hover:text-zinc-300 px-1"><Icons.Paperclip /></button>
+                <input type="text" value={inputMessage} 
+                  onChange={(e) => setInputMessage(e.target.value)} 
+                  onKeyDown={(e) => e.key === 'Enter' && handleSend(inputMessage)}
+                  placeholder="Ask Gemini to extract clauses or map liabilities..." 
+                  className="w-full bg-[#1c1c1f] text-xs text-zinc-200 p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-indigo-500" />
+                <button onClick={() => handleSend(inputMessage)} className="bg-indigo-600 hover:bg-indigo-500 text-white p-2.5 rounded-lg text-xs font-medium transition-all shadow-md"><Icons.Send /></button>
+              </div>
+            </div>
+          );
+        }
+
+        function AnalyticsView() {
+          return (
+            <div className="bg-[#121214] border border-[#27272a] rounded-xl p-6 space-y-4 shadow-sm w-full">
+              <div>
+                <h3 className="text-sm font-semibold text-zinc-200">System Performance Telemetry</h3>
+                <p className="text-xs text-zinc-500">Live operational monitoring of your deployed Vertex AI container models.</p>
+              </div>
+              <div className="h-48 border border-zinc-800 bg-zinc-900/30 rounded-xl flex items-end p-4 gap-2 sm:gap-3 justify-around">
+                {[45, 60, 32, 75, 90, 65, 85, 50, 95, 70].map((h, i) => (
+                  <div key={i} className="w-full bg-gradient-to-t from-indigo-600 to-violet-500 rounded-t animate-pulse" style={{ height: `${h}%`, animationDelay: `${i*100}ms` }}></div>
+                ))}
+              </div>
+            </div>
+          );
+        }
+
+        function SettingsView({ selectedModel, setSelectedModel }) {
+          return (
+            <div className="bg-[#121214] border border-[#27272a] rounded-xl p-5 sm:p-6 space-y-5 shadow-sm w-full">
+              <div>
+                <h3 className="text-sm font-semibold text-zinc-200">Global Engine Configurations</h3>
+                <p className="text-xs text-zinc-500">Configure your security boundaries and pipeline weights.</p>
+              </div>
+              <div className="space-y-4 divide-y divide-zinc-800/60">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2">
+                  <div>
+                    <label className="text-xs font-medium text-zinc-300 block">Default LLM Orchestrator</label>
+                  </div>
+                  <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="bg-zinc-900 border border-zinc-800 text-xs rounded-lg p-2 text-zinc-300 w-full sm:w-auto">
+                    <option value="Gemini 1.5 Pro">Gemini 1.5 Pro</option>
+                    <option value="Gemini Flash">Gemini Flash</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        // 6. MAIN APP MAIN MANAGER BLOCK
+        function App() {
+          const [activeTab, setActiveTab] = React.useState('Dashboard');
+          const [selectedModel, setSelectedModel] = React.useState('Gemini 1.5 Pro');
+          const [isMobileSidebarOpen, setIsMobileSidebarOpen] = React.useState(false);
+          const [showProfileModal, setShowProfileModal] = React.useState(false);
+          
+          const [searchQuery, setSearchQuery] = React.useState('');
+          
+          const [isUploading, setIsUploading] = React.useState(false);
+          const [uploadProgress, setUploadProgress] = React.useState(0);
+          const [currentUploadingName, setCurrentUploadingName] = React.useState('');
+          
+          const [notifications, setNotifications] = React.useState([
+            { id: 1, text: "Navin Kukreja initialized secure context mapping.", time: "10 mins ago", type: "create", read: false },
+            { id: 2, text: "Data_Processing_Addendum_v4.pdf text layers parsed.", time: "1 hr ago", type: "create", read: true }
+          ]);
+          
+          const [documents, setDocuments] = React.useState([
+            { id: 1, name: 'MSLA_Vendor_Agreement_2026.pdf', size: '2.4 MB', date: 'May 24, 2026', status: 'Indexed' },
+            { id: 2, name: 'Data_Processing_Addendum_v4.pdf', size: '1.1 MB', date: 'May 25, 2026', status: 'Indexed' },
+            { id: 3, name: 'NDA_Executive_Search_Draft.pdf', size: '420 KB', date: 'May 26, 2026', status: 'Failed' },
+          ]);
+
+          const handleNewUpload = (meta) => {
+            if (isUploading) return;
+            setCurrentUploadingName(meta.name);
+            setIsUploading(true);
+            setUploadProgress(0);
+
+            const interval = setInterval(() => {
+              setUploadProgress((oldProgress) => {
+                if (oldProgress >= 100) {
+                  clearInterval(interval);
+                  setIsUploading(false);
+                  setDocuments(prev => [{ id: Date.now(), name: meta.name, size: meta.size, date: meta.date, status: 'Indexed' }, ...prev]);
+                  setNotifications(prev => [{ id: Date.now(), text: `${meta.name} indexed cleanly.`, time: "Just Now", type: "create", read: false }, ...prev]);
+                  return 100;
+                }
+                return oldProgress + 20;
+              });
+            }, 100);
+          };
+
+          const handleDeleteDocument = (id, name) => {
+            setDocuments(prev => prev.filter(doc => doc.id !== id));
+            setNotifications(prev => [{ id: Date.now(), text: `${name} deleted from indexes.`, time: "Just Now", type: "delete", read: false }, ...prev]);
+          };
+
+          return (
+            <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex overflow-hidden w-full relative">
+              <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} docCount={documents.length} isMobileOpen={isMobileSidebarOpen} setIsMobileOpen={setIsMobileSidebarOpen} onProfileClick={() => setShowProfileModal(true)} />
+              
+              <div className="flex-1 flex flex-col min-w-0 overflow-hidden h-screen">
+                <Header selectedModel={selectedModel} setSelectedModel={setSelectedModel} onToggleSidebar={() => setIsMobileSidebarOpen(true)} onProfileClick={() => setShowProfileModal(true)} notifications={notifications} setNotifications={setNotifications} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+                
+                <main className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6 w-full">
+                  {activeTab === 'Dashboard' && (
+                    <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start w-full">
+                      <div className="xl:col-span-12 w-full"><MetricsGrid /></div>
+                      <div className="xl:col-span-7 w-full">
+                        <DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} searchQuery={searchQuery} />
+                      </div>
+                      <div className="xl:col-span-5 space-y-4 w-full">
                         <ChatPanel selectedModel={selectedModel} isStandalone={false} />
                       </div>
                     </div>
