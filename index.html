@@ -1,5 +1,4 @@
-<!-- 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,24 +16,79 @@
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* CHANGED: New vibrant color palette - teal/cyan/emerald instead of indigo/purple */
+        .gradient-text {
+            background: linear-gradient(to right, #06b6d4, #10b981, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .premium-card {
+            border: 1px solid #27272a;
+            background-color: rgba(9, 9, 11, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 0.75rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .premium-card:hover {
+            border-color: rgba(6, 182, 212, 0.3);
+            background-color: rgba(24, 24, 27, 0.4);
+        }
+
+        /* FIX: Reduced hero gap */
+        .hero-section { padding-top: 100px !important; padding-bottom: 60px !important; }
+
+        /* Vibrant accent colors */
+        .accent-cyan { color: #06b6d4; }
+        .accent-emerald { color: #10b981; }
+        .accent-amber { color: #f59e0b; }
+        .bg-accent { background-color: #0891b2; }
+        .bg-accent:hover { background-color: #0e7490; }
+
+        /* Pricing cards highlight */
+        .pricing-popular {
+            border-color: #06b6d4 !important;
+            background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(16,185,129,0.05)) !important;
+            position: relative;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: #0a0a0d;
+            border-top: 1px solid #1f1f23;
+        }
+
+        /* Responsive fixes */
+        @media (max-width: 640px) {
+            .hero-title { font-size: 2.25rem !important; line-height: 1.15 !important; }
+            .stats-grid { grid-template-columns: 1fr 1fr !important; }
+            .nav-links { display: none !important; }
+            .pricing-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 768px) {
+            .pricing-grid { grid-template-columns: 1fr !important; }
+            .features-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+        @media (max-width: 480px) {
+            .features-grid { grid-template-columns: 1fr !important; }
+        }
     </style>
 </head>
 <body class="antialiased">
     <div id="root"></div>
 
     <script type="text/babel">
-        // Custom Inline SVG Component Map for 100% Stability
         const Icons = {
           Layers: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>,
           FileText: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>,
           MessageSquare: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>,
           BarChart2: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>,
-          Settings: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>,
+          Settings: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>,
           ShieldCheck: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 11l2 2 4-4"/></svg>,
           Sparkles: ({className}) => <svg className={className || "w-4 h-4"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>,
           Search: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>,
           Cpu: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>,
-          UploadCloud: () => <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>,
+          UploadCloud: () => <svg className="w-6 h-6" style={{color:'#06b6d4'}} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>,
           CheckCircle2: ({className}) => <svg className={className || "w-3 h-3"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>,
           RefreshCw: ({className}) => <svg className={className || "w-3 h-3"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 11-.57-8.38l5.67-5.67"/></svg>,
           Clock: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>,
@@ -43,62 +97,469 @@
           Send: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>,
           Paperclip: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>,
           Menu: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>,
-          Bell: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+          Bell: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>,
+          Check: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>,
+          Twitter: () => <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.747-8.77-8.18-10.73h6.5l4.244 5.622 5.19-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>,
+          Linkedin: () => <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>,
+          Github: () => <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>,
         };
 
-        // 1. HEADER COMPONENT WITH SEARCH TERMINAL CONNECTIONS
-        function Header({ selectedModel, setSelectedModel, onToggleSidebar, onProfileClick, notifications, setNotifications, searchQuery, setSearchQuery }) {
-          const [showNotifBox, setShowNotifBox] = React.useState(false);
-          const hasUnread = notifications.some(n => !n.read);
+        // ==========================================
+        // DYNAMIC AUTHENTICATION MODAL (FULLY UNLOCKED BYPASS)
+        // ==========================================
+        function AuthModal({ isOpen, onClose, onAuthSuccess, registeredUsers, onRegisterUser }) {
+          const [isSignUp, setIsSignUp] = React.useState(false);
+          const [email, setEmail] = React.useState('');
+          const [password, setPassword] = React.useState('');
+          const [name, setName] = React.useState('');
+          const [regSuccessMsg, setRegSuccessMsg] = React.useState(false);
+
+          React.useEffect(() => {
+            const handleToggle = (e) => {
+              setIsSignUp(e.detail.signUp);
+              setRegSuccessMsg(false);
+            };
+            window.addEventListener('openAuthModal', handleToggle);
+            return () => window.removeEventListener('openAuthModal', handleToggle);
+          }, []);
+
+          if (!isOpen) return null;
+
+          const handleSubmit = (e) => {
+            e.preventDefault();
+            if (isSignUp) {
+              if (!name.trim() || !email.trim() || !password.trim()) return;
+              onRegisterUser({ name: name.trim(), email: email.trim().toLowerCase(), password: password, role: 'Associate Counsel' });
+              setRegSuccessMsg(true);
+              setIsSignUp(false);
+              setName('');
+            } else {
+              if (!email.trim() || !password.trim()) return;
+              const foundUser = registeredUsers.find(u => u.email === email.trim().toLowerCase());
+              onAuthSuccess({ name: foundUser ? foundUser.name : (email.split('@')[0].toUpperCase()), email: email.trim(), role: foundUser ? foundUser.role : 'Senior Legal Counsel' });
+              setRegSuccessMsg(false);
+              onClose();
+            }
+          };
 
           return (
-            <header className="h-16 border-b border-[#27272a] bg-[#121214]/80 backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-40 relative">
-              <button onClick={onToggleSidebar} className="md:hidden text-zinc-400 hover:text-zinc-200 mr-2">
-                <Icons.Menu />
-              </button>
-              
-              {/* WIRED FUNCTIONAL SEARCH CORE INPUT */}
-              <div className="relative max-w-md w-full hidden sm:block">
-                <Icons.Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-zinc-500" />
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Type filename keyword to filter indexed documents..." 
-                  className="w-full bg-[#18181b] border border-[#27272a] rounded-lg pl-9 pr-4 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 transition-colors" 
-                />
+            <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4">
+              <div className="bg-[#121214] border border-[#27272a] rounded-xl max-w-sm w-full p-6 space-y-4 relative shadow-2xl">
+                <button onClick={() => { onClose(); setRegSuccessMsg(false); }} className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-300 transition-colors">✕</button>
+                <div className="text-center">
+                  <h3 className="text-lg font-bold text-white">{isSignUp ? 'Create Account' : 'Sign in'}</h3>
+                  <p className="text-zinc-500 text-xs mt-1">{isSignUp ? 'Sign up to build legal repositories' : 'Enter authorized credentials to unlock telemetry'}</p>
+                </div>
+                {regSuccessMsg && (
+                  <div className="bg-emerald-950/30 border border-emerald-500/20 text-emerald-400 text-[11px] p-2.5 rounded-lg text-center font-medium">
+                    ✓ Registration Complete! Please Sign In with the exact account now.
+                  </div>
+                )}
+                <form onSubmit={handleSubmit} className="space-y-3.5 pt-1">
+                  {isSignUp && (
+                    <div>
+                      <label className="text-[11px] text-zinc-400 font-medium block mb-1">Full Name</label>
+                      <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Alex Corporate" className="w-full bg-[#1c1c1f] text-xs text-white p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-cyan-500" required />
+                    </div>
+                  )}
+                  <div>
+                    <label className="text-[11px] text-zinc-400 font-medium block mb-1">Corporate Email</label>
+                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="counsel@company.com" className="w-full bg-[#1c1c1f] text-xs text-white p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-cyan-500" required />
+                  </div>
+                  <div>
+                    <label className="text-[11px] text-zinc-400 font-medium block mb-1">Security Vault Password</label>
+                    <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••••••" className="w-full bg-[#1c1c1f] text-xs text-white p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-cyan-500" required />
+                  </div>
+                  <button type="submit" className="w-full text-white py-2.5 rounded-lg text-xs font-semibold transition-all shadow-md mt-2" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>
+                    {isSignUp ? 'Register' : 'Sign In'}
+                  </button>
+                </form>
+                <div className="text-center pt-2 text-xs border-t border-zinc-900 text-zinc-500">
+                  {isSignUp ? 'Already have Account?' : "Don't have an account?"}{' '}
+                  <button type="button" onClick={() => { setIsSignUp(!isSignUp); setRegSuccessMsg(false); }} className="text-cyan-400 hover:underline font-medium">
+                    {isSignUp ? 'Sign In' : 'Register'}
+                  </button>
+                </div>
               </div>
-              
-              <div className="flex items-center gap-4 ml-auto relative">
+            </div>
+          );
+        }
+
+        // ==========================================
+        // MARKETING LANDING COMPONENT
+        // ==========================================
+        function LandingNavbar({ onTriggerAuth }) {
+          const [isScrolled, setIsScrolled] = React.useState(false);
+          React.useEffect(() => {
+            const handleScroll = () => setIsScrolled(window.scrollY > 20);
+            window.addEventListener('scroll', handleScroll);
+            return () => window.removeEventListener('scroll', handleScroll);
+          }, []);
+
+          return (
+            <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-[#09090b]/90 backdrop-blur-md border-b border-zinc-800/80 py-3' : 'bg-transparent py-5'}`}>
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <div className="h-9 w-9 rounded-lg flex items-center justify-center font-bold text-white shadow-lg" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>L</div>
+                  <span className="text-xl font-bold tracking-tight text-white">Lexi<span style={{color:'#06b6d4'}}>Mind</span> <span className="text-xs text-zinc-500 font-mono border border-zinc-800 rounded-full bg-zinc-900 px-2 py-0.5">AI</span></span>
+                </div>
+                <div className="nav-links hidden md:flex items-center space-x-8 text-sm font-medium text-zinc-400">
+                  <a href="#features" className="hover:text-white transition-colors">Key Capabilities</a>
+                  <a href="#workflow" className="hover:text-white transition-colors">How It Works</a>
+                  <a href="#security" className="hover:text-white transition-colors">Trust Boundary</a>
+                  <a href="#pricing" className="hover:text-white transition-colors">Pricing Matrix</a>
+                </div>
+                <div className="flex items-center space-x-2 sm:space-x-4">
+                  <button onClick={() => onTriggerAuth(false)} className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Sign In</button>
+                  <button onClick={() => onTriggerAuth(true)} className="text-xs sm:text-sm font-semibold text-white px-3 sm:px-4 py-2 rounded-lg transition-all shadow-md" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>Register</button>
+                </div>
+              </div>
+            </nav>
+          );
+        }
+
+        function LandingHero({ onTriggerAuth }) {
+          return (
+            /* FIX: Reduced padding-top and padding-bottom to close the gap */
+            <section className="relative flex flex-col items-center justify-center overflow-hidden bg-[#09090b]" style={{paddingTop:'90px', paddingBottom:'40px'}}>
+              <div className="absolute inset-0 z-0">
+                {/* CHANGED: Teal/cyan glow instead of indigo */}
+                <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[130px]" style={{background:'rgba(6,182,212,0.08)'}} />
+                <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] rounded-full blur-[100px]" style={{background:'rgba(16,185,129,0.05)'}} />
+              </div>
+              <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+                <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-zinc-800 bg-zinc-900/60 backdrop-blur-sm text-xs font-medium text-zinc-400 mb-6">
+                  <span className="h-2 w-2 rounded-full animate-pulse" style={{background:'#06b6d4'}} />
+                  <span>Next-Gen Legal-Tech Automation</span>
+                </div>
+                <h1 className="hero-title text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-5 leading-tight">
+                  Intelligent Legal Review in <br />
+                  <span className="gradient-text">A Fraction of the Time</span>
+                </h1>
+                <p className="text-zinc-400 text-sm sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                  Upload vendor agreements, analyze compliance guidelines, and purge critical document risks instantly with an executive dashboard driven by localized AI intelligence.
+                </p>
+                <div className="flex justify-center gap-4 mb-10">
+                  <button onClick={() => onTriggerAuth(false)} className="px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold rounded-xl transition-all shadow-lg flex items-center space-x-3 group text-sm sm:text-base" style={{background:'linear-gradient(135deg,#0891b2,#059669)', boxShadow:'0 10px 40px rgba(6,182,212,0.2)'}}>
+                    <span>Launch Platform Workspace</span>
+                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                  </button>
+                </div>
+
+                {/* FIX: Reduced vertical padding in stats section */}
+                <div className="stats-grid grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto border-y border-zinc-800/60 py-6 bg-zinc-950/20 backdrop-blur-sm">
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-mono">10x</h3>
+                    <p className="text-zinc-500 text-[11px] uppercase tracking-wider mt-1">Faster Processing</p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold font-mono" style={{color:'#06b6d4'}}>99.4%</h3>
+                    <p className="text-zinc-500 text-[11px] uppercase tracking-wider mt-1">Risk Detection Accuracy</p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-mono">Zero</h3>
+                    <p className="text-zinc-500 text-[11px] uppercase tracking-wider mt-1">Manual Blindspots</p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold font-mono" style={{color:'#10b981'}}>24/7</h3>
+                    <p className="text-zinc-500 text-[11px] uppercase tracking-wider mt-1">Compliance Auditing</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          );
+        }
+
+        function LandingFeatures() {
+          const cards = [
+            { icon: "📥", title: "Instant Contract Ingestion", desc: "Drag and drop standard PDF, TXT, or DOCX legal documents to automatically scan and catalog files cleanly into your repository." },
+            { icon: "🔍", title: "Automated Risk Discovery", desc: "Instantly flags asymmetrical notice terms, hidden liability constraints, and data protection gaps within contracts." },
+            { icon: "💬", title: "Interactive Legal AI Chat", desc: "Chat natively with specialized models to break down confusing legal clauses or summarize lengthy master service agreements." },
+            { icon: "📊", title: "Live Compliance Metrics", desc: "Track total indexed data nodes, operational response scores, and audit success filters right from an executive dashboard layout." },
+            { icon: "🛡️", title: "Data Integrity & Validation", desc: "Guarantees zero corrupted contract entries or text loss through robust background data parsing controls." },
+            { icon: "⏰", title: "Audit Log History", desc: "Maintains clear security chronological records for all repository additions, modifications, and PURGES instantly." }
+          ];
+          return (
+            <section id="features" className="py-20 bg-[#09090b] border-t border-zinc-900 relative z-10">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <div className="text-center max-w-2xl mx-auto mb-14">
+                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">Product Core Capabilities</h2>
+                  <p className="text-zinc-400 text-sm leading-relaxed">Everything legal and enterprise operational teams need to protect compliance matrices safely.</p>
+                </div>
+                <div className="features-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+                  {cards.map((c, idx) => (
+                    <div key={idx} className="premium-card p-6 flex flex-col justify-between group hover:-translate-y-1 transition-transform duration-300">
+                      <div>
+                        <div className="h-10 w-10 bg-zinc-900 border border-zinc-800 rounded-lg flex items-center justify-center text-lg mb-5 group-hover:border-cyan-800/50 transition-colors">{c.icon}</div>
+                        <h3 className="text-sm font-bold text-white mb-2 tracking-tight">{c.title}</h3>
+                        <p className="text-zinc-400 text-xs leading-relaxed">{c.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        }
+
+        function LandingWorkflow() {
+          return (
+            <section id="workflow" className="py-20 bg-[#0c0c0e] border-t border-zinc-900 relative z-10">
+              <div className="max-w-5xl mx-auto px-4 sm:px-6">
+                <div className="text-center max-w-2xl mx-auto mb-14">
+                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">The Contract Intelligence Workflow</h2>
+                  <p className="text-zinc-400 text-sm">Three basic steps to turn raw legal files into actionable insights.</p>
+                </div>
+                <div className="space-y-4">
+                  <div className="premium-card p-5 bg-zinc-900/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" style={{borderLeft:'2px solid #06b6d4'}}>
+                    <div className="max-w-xl">
+                      <span className="text-[10px] uppercase font-mono tracking-wider px-2 py-0.5 rounded border" style={{background:'rgba(6,182,212,0.1)', color:'#06b6d4', borderColor:'rgba(6,182,212,0.2)'}}>Step 01</span>
+                      <h4 className="text-sm font-bold text-white mt-2">Upload & Index</h4>
+                      <p className="text-zinc-400 text-xs mt-1">Drop documents directly into the responsive client drop-zone. The platform registers titles in milliseconds.</p>
+                    </div>
+                  </div>
+                  <div className="premium-card p-5 bg-zinc-900/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" style={{borderLeft:'2px solid #10b981'}}>
+                    <div className="max-w-xl">
+                      <span className="text-[10px] uppercase font-mono tracking-wider px-2 py-0.5 rounded border" style={{background:'rgba(16,185,129,0.1)', color:'#10b981', borderColor:'rgba(16,185,129,0.2)'}}>Step 02</span>
+                      <h4 className="text-sm font-bold text-white mt-2">Automated Extraction & Audit</h4>
+                      <p className="text-zinc-400 text-xs mt-1">Advanced background text-parsing models read through paragraphs, instantly isolating liability thresholds.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          );
+        }
+
+        function LandingTrustSecurity() {
+          const blocks = [
+            { icon: "🛡️", title: "Enterprise Isolated Vault", info: "SOC2 Standard", desc: "Uses segregated dynamic tenancy architecture bounds ensuring your contract repositories are completely siloed." },
+            { icon: "🔑", title: "End-to-End Cryptography", info: "AES-256 State", desc: "All system text variables, files, and chat logging pipelines remain completely encrypted at rest." },
+            { icon: "🚫", title: "Strict Privacy Commitment", desc: "Your sensitive files are never utilized for model public retraining tracks." }
+          ];
+          return (
+            <section id="security" className="py-20 bg-[#09090b] border-t border-zinc-900 relative z-10">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <div className="text-center max-w-2xl mx-auto mb-14">
+                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">Bank-Grade Privacy Protocols</h2>
+                  <p className="text-zinc-400 text-sm">LexiMind AI uses premium data fencing mechanisms to keep corporate metadata traces secure.</p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  {blocks.map((b, idx) => (
+                    <div key={idx} className="premium-card p-6 bg-zinc-950/30">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-2xl">{b.icon}</span>
+                        {b.info && <span className="text-[10px] font-mono px-2 py-0.5 rounded border" style={{background:'rgba(6,182,212,0.1)', color:'#06b6d4', borderColor:'rgba(6,182,212,0.2)'}}>{b.info}</span>}
+                      </div>
+                      <h3 className="text-white text-base font-bold mb-2">{b.title}</h3>
+                      <p className="text-zinc-400 text-xs">{b.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        }
+
+        // CHANGED: 3 pricing plans added
+        function LandingPricing() {
+          const plans = [
+            {
+              name: 'Starter',
+              price: '$49',
+              period: '/month',
+              desc: 'Perfect for small legal teams and solo practitioners.',
+              color: '#64748b',
+              features: ['Up to 50 documents/month', 'Basic risk detection', 'AI Chat (100 queries/mo)', '1 user seat', 'Email support'],
+              cta: 'Get Started',
+              popular: false,
+            },
+            {
+              name: 'Professional',
+              price: '$149',
+              period: '/month',
+              desc: 'For growing legal departments with advanced needs.',
+              color: '#06b6d4',
+              features: ['Up to 500 documents/month', 'Advanced risk discovery', 'AI Chat (unlimited)', 'Up to 10 user seats', 'Compliance dashboard', 'Priority support'],
+              cta: 'Start Free Trial',
+              popular: true,
+            },
+            {
+              name: 'Enterprise',
+              price: 'Custom',
+              period: '',
+              desc: 'Full-scale deployment for large organizations.',
+              color: '#10b981',
+              features: ['Unlimited documents', 'Full audit log history', 'Dedicated AI cluster', 'Unlimited user seats', 'SOC2 + AES-256 vault', 'Dedicated account manager'],
+              cta: 'Contact Sales',
+              popular: false,
+            }
+          ];
+
+          return (
+            <section id="pricing" className="py-20 bg-[#0c0c0e] border-t border-zinc-900 relative z-10">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <div className="text-center max-w-2xl mx-auto mb-14">
+                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">Flexible Pricing Matrix</h2>
+                  <p className="text-zinc-400 text-sm">Choose the plan that fits your team's legal review volume and compliance needs.</p>
+                </div>
+                <div className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                  {plans.map((plan, idx) => (
+                    <div key={idx} className={`premium-card p-7 flex flex-col gap-5 ${plan.popular ? 'pricing-popular' : ''}`} style={plan.popular ? {borderColor:'#06b6d4'} : {}}>
+                      {plan.popular && (
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full text-white" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>Most Popular</span>
+                        </div>
+                      )}
+                      <div>
+                        <h4 className="text-xs font-bold uppercase tracking-widest mb-2" style={{color: plan.color}}>{plan.name}</h4>
+                        <div className="flex items-end gap-1 mb-2">
+                          <span className="text-4xl font-extrabold text-white font-mono">{plan.price}</span>
+                          {plan.period && <span className="text-zinc-500 text-sm pb-1">{plan.period}</span>}
+                        </div>
+                        <p className="text-zinc-400 text-xs leading-relaxed">{plan.desc}</p>
+                      </div>
+                      <ul className="space-y-2.5 flex-1">
+                        {plan.features.map((f, i) => (
+                          <li key={i} className="flex items-start gap-2.5 text-xs text-zinc-300">
+                            <span className="mt-0.5 flex-shrink-0" style={{color: plan.color}}>
+                              <Icons.Check />
+                            </span>
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                      <button className="w-full py-2.5 rounded-lg text-xs font-semibold transition-all" style={plan.popular ? {background:'linear-gradient(135deg,#0891b2,#059669)', color:'white', boxShadow:'0 4px 20px rgba(6,182,212,0.25)'} : {background:'#18181b', color: plan.color, border:`1px solid ${plan.color}33`}}>
+                        {plan.cta}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        }
+
+        // ADDED: Full footer with links, social, etc.
+        function LandingFooter() {
+          const footerLinks = {
+            Product: ['Key Capabilities', 'How It Works', 'Pricing Matrix', 'Changelog'],
+            Legal: ['Privacy Policy', 'Terms of Service', 'Data Processing', 'Cookie Policy'],
+            Company: ['About Us', 'Careers', 'Blog', 'Contact'],
+            Support: ['Documentation', 'API Reference', 'Status Page', 'Help Center'],
+          };
+
+          return (
+            <footer className="site-footer">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 mb-12">
+                  {/* Brand column */}
+                  <div className="col-span-2 sm:col-span-3 md:col-span-1">
+                    <div className="flex items-center space-x-2 mb-4">
+                      <div className="h-8 w-8 rounded-lg flex items-center justify-center font-bold text-white text-sm" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>L</div>
+                      <span className="text-base font-bold text-white">Lexi<span style={{color:'#06b6d4'}}>Mind</span></span>
+                    </div>
+                    <p className="text-zinc-500 text-xs leading-relaxed mb-5 max-w-xs">Enterprise-grade AI legal review platform. Secure, fast, and accurate contract intelligence for modern legal teams.</p>
+                    <div className="flex items-center gap-3">
+                      <a href="#" className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-cyan-400 hover:border-cyan-800 transition-colors"><Icons.Twitter /></a>
+                      <a href="#" className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-cyan-400 hover:border-cyan-800 transition-colors"><Icons.Linkedin /></a>
+                      <a href="#" className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-cyan-400 hover:border-cyan-800 transition-colors"><Icons.Github /></a>
+                    </div>
+                  </div>
+
+                  {/* Link columns */}
+                  {Object.entries(footerLinks).map(([cat, links]) => (
+                    <div key={cat}>
+                      <h5 className="text-xs font-semibold text-zinc-200 uppercase tracking-widest mb-4">{cat}</h5>
+                      <ul className="space-y-2.5">
+                        {links.map(link => (
+                          <li key={link}>
+                            <a href="#" className="text-xs text-zinc-500 hover:text-zinc-200 transition-colors">{link}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom bar */}
+                <div className="border-t border-zinc-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <p className="text-xs text-zinc-600">© {new Date().getFullYear()} LexiMind AI Frameworks. All rights reserved.</p>
+                  <div className="flex items-center gap-3">
+                    <span className="flex items-center gap-1.5 text-[11px] text-emerald-500 bg-emerald-950/30 border border-emerald-900/30 px-2.5 py-1 rounded-full">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                      All systems operational
+                    </span>
+                    <span className="text-[11px] text-zinc-600 border border-zinc-800 px-2.5 py-1 rounded-full font-mono">SOC2 Certified</span>
+                  </div>
+                </div>
+              </div>
+            </footer>
+          );
+        }
+
+        function LandingPage({ onTriggerAuth }) {
+          return (
+            <div className="bg-[#09090b] min-h-screen text-zinc-200 scroll-smooth">
+              <LandingNavbar onTriggerAuth={onTriggerAuth} />
+              <LandingHero onTriggerAuth={onTriggerAuth} />
+              <LandingFeatures />
+              <LandingWorkflow />
+              <LandingTrustSecurity />
+              <LandingPricing />
+              <LandingFooter />
+            </div>
+          );
+        }
+
+        // ==========================================
+        // FIXED DASHBOARD SYSTEM ENGINE COMPONENT BLOCKS
+        // ==========================================
+        function Header({ activeUser, selectedModel, setSelectedModel, onToggleSidebar, onProfileClick, notifications, setNotifications, searchQuery, setSearchQuery }) {
+          const [showNotifBox, setShowNotifBox] = React.useState(false);
+          const hasUnread = notifications.some(n => !n.read);
+          const userInitials = activeUser.name ? activeUser.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'NK';
+
+          return (
+            <header className="h-16 border-b border-[#27272a] bg-[#121214]/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40 relative gap-4">
+              <div className="flex items-center gap-3 flex-1 max-w-md min-w-0">
+                <button onClick={onToggleSidebar} className="md:hidden text-zinc-400 hover:text-zinc-200 p-1 flex-shrink-0">
+                  <Icons.Menu />
+                </button>
+                <div className="relative w-full">
+                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                    <Icons.Search className="h-3.5 w-3.5 text-zinc-500" />
+                  </div>
+                  <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search files..." className="w-full bg-[#18181b] border border-[#27272a] rounded-lg pl-10 pr-4 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-cyan-500 transition-colors truncate" />
+                </div>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0 ml-auto relative">
                 <div className="flex items-center gap-2 bg-[#18181b] border border-[#27272a] rounded-lg px-2 py-1">
-                  <span className="text-[10px] text-zinc-500 font-medium">Model:</span>
+                  <span className="text-[10px] text-zinc-500 font-medium hidden sm:inline">Model:</span>
                   <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="bg-transparent text-xs font-medium text-zinc-300 focus:outline-none cursor-pointer">
                     <option value="Gemini 1.5 Pro" className="bg-[#121214]">Gemini 1.5 Pro</option>
                     <option value="Gemini Flash" className="bg-[#121214]">Gemini Flash</option>
                   </select>
                 </div>
-                
-                <div className="flex items-center gap-2 bg-[#1c1c21] border border-zinc-800/80 rounded-full px-3 py-1">
+                <div className="hidden xs:flex items-center gap-2 bg-[#1c1c21] border border-zinc-800/80 rounded-full px-3 py-1">
                   <Icons.Cpu />
                   <span className="text-[11px] font-medium text-zinc-300 hidden sm:inline">Vertex AI</span>
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]"></span>
+                  <span className="inline-block w-1.5 h-1.5 rounded-full" style={{background:'#06b6d4'}}></span>
                 </div>
-
                 <div className="relative">
                   <button onClick={() => setShowNotifBox(!showNotifBox)} className="p-1.5 rounded-lg border border-zinc-800 bg-[#18181b] text-zinc-400 hover:text-zinc-200 relative transition-all">
                     <Icons.Bell />
-                    {hasUnread && <span className="absolute top-1 right-1 w-2 h-2 bg-indigo-500 rounded-full"></span>}
+                    {hasUnread && <span className="absolute top-1 right-1 w-2 h-2 rounded-full" style={{background:'#06b6d4'}}></span>}
                   </button>
-
                   {showNotifBox && (
-                    <div className="absolute right-0 mt-2 w-80 bg-[#121214] border border-[#27272a] rounded-xl shadow-xl overflow-hidden z-50">
+                    <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-[#121214] border border-[#27272a] rounded-xl shadow-xl overflow-hidden z-50">
                       <div className="p-3 bg-[#161619] border-b border-[#27272a] flex justify-between items-center">
                         <span className="text-xs font-semibold text-zinc-200">Audit History Logs</span>
-                        <button onClick={() => { setNotifications(prev => prev.map(n => ({...n, read: true}))); setShowNotifBox(false); }} className="text-[10px] text-indigo-400 hover:underline">Mark all read</button>
+                        <button onClick={() => { setNotifications(prev => prev.map(n => ({...n, read: true}))); setShowNotifBox(false); }} className="text-[10px] hover:underline font-medium" style={{color:'#06b6d4'}}>Mark all read</button>
                       </div>
                       <div className="divide-y divide-zinc-800 max-h-64 overflow-y-auto">
                         {notifications.map(n => (
-                          <div key={n.id} className={`p-3 text-[11px] transition-colors ${n.read ? 'bg-transparent text-zinc-400' : 'bg-indigo-500/5 text-zinc-200'}`}>
+                          <div key={n.id} className={`p-3 text-[11px] transition-colors ${n.read ? 'bg-transparent text-zinc-400' : 'text-zinc-200'}`} style={!n.read ? {background:'rgba(6,182,212,0.03)'} : {}}>
                             <div className="flex justify-between items-start mb-0.5">
                               <span className={`font-medium ${n.type === 'delete' ? 'text-rose-400' : 'text-zinc-300'}`}>
                                 {n.type === 'create' ? '📥 File Created' : '🗑️ File Removed'}
@@ -112,17 +573,15 @@
                     </div>
                   )}
                 </div>
-
-                <div onClick={onProfileClick} className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-semibold text-xs text-white border border-zinc-700 cursor-pointer hover:scale-105 transition-transform">
-                  NK
+                <div onClick={onProfileClick} className="w-8 h-8 rounded-full flex items-center justify-center font-semibold text-xs text-white border border-zinc-700 cursor-pointer hover:scale-105 transition-transform flex-shrink-0" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>
+                  {userInitials}
                 </div>
               </div>
             </header>
           );
         }
 
-        // 2. LEFT SIDEBAR COMPONENT
-        function Sidebar({ activeTab, setActiveTab, docCount, isMobileOpen, setIsMobileOpen, onProfileClick }) {
+        function Sidebar({ activeUser, activeTab, setActiveTab, docCount, isMobileOpen, setIsMobileOpen, onProfileClick, onBackToLanding }) {
           const menuItems = [
             { name: 'Dashboard', icon: Icons.Layers },
             { name: 'Documents', icon: Icons.FileText, count: docCount },
@@ -130,83 +589,83 @@
             { name: 'Analytics', icon: Icons.BarChart2 },
             { name: 'Settings', icon: Icons.Settings },
           ];
+          const userInitials = activeUser.name ? activeUser.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'NK';
+
           return (
-            <aside className={`w-64 bg-[#121214] border-r border-[#27272a] flex flex-col justify-between fixed md:sticky top-0 h-screen z-50 transition-transform duration-200 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
-              <div>
-                <div className="h-16 flex items-center justify-between px-6 border-b border-[#27272a]">
-                  <div className="flex items-center gap-2.5">
-                    <div className="bg-gradient-to-tr from-indigo-500 to-violet-500 p-2 rounded-xl shadow-lg">
-                      <Icons.Sparkles className="w-4 h-4 text-white" />
+            <React.Fragment>
+              {isMobileOpen && <div onClick={() => setIsMobileOpen(false)} className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40 md:hidden" />}
+              <aside className={`w-64 bg-[#121214] border-r border-[#27272a] flex flex-col justify-between fixed md:sticky top-0 h-screen z-50 transition-transform duration-300 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+                <div>
+                  <div className="h-16 flex items-center gap-2 px-4 border-b border-[#27272a]">
+                    <button onClick={onBackToLanding} className="text-[10px] font-bold font-mono border border-zinc-800 bg-zinc-900/80 text-zinc-400 hover:text-white px-2.5 py-1 rounded transition-colors flex-shrink-0">← Back</button>
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="p-2 rounded-xl shadow-lg flex-shrink-0" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>
+                        <Icons.Sparkles className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="min-w-0 truncate">
+                        <span className="font-semibold tracking-tight text-xs block text-zinc-100 truncate">LexiMind AI</span>
+                        <span className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase block truncate">Enterprise Legal</span>
+                      </div>
                     </div>
-                    <div>
-                      <span className="font-semibold tracking-tight text-xs block text-zinc-100">LexiMind AI</span>
-                      <span className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase block">Enterprise Legal</span>
+                  </div>
+                  <nav className="p-4 space-y-1.5">
+                    {menuItems.map((item) => {
+                      const Icon = item.icon;
+                      const isActive = activeTab === item.name;
+                      return (
+                        <button key={item.name} onClick={() => { setActiveTab(item.name); setIsMobileOpen(false); }}
+                          className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all group ${isActive ? 'bg-[#1e1e22] border border-zinc-800/80 shadow-sm' : 'text-zinc-400 hover:bg-[#18181b] hover:text-zinc-200'}`}
+                          style={isActive ? {color:'#06b6d4'} : {}}>
+                          <div className="flex items-center gap-3">
+                            <Icon />
+                            <span>{item.name}</span>
+                          </div>
+                          {item.count !== undefined && (
+                            <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${isActive ? 'text-cyan-400' : 'bg-zinc-800 text-zinc-500'}`} style={isActive ? {background:'rgba(6,182,212,0.1)'} : {}}>
+                              {item.count}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </nav>
+                </div>
+                <div onClick={onProfileClick} className="p-4 border-t border-[#27272a] space-y-3 bg-[#161619] cursor-pointer hover:bg-zinc-900/60 transition-colors group">
+                  <div className="flex items-center justify-between text-[10px] bg-emerald-950/20 border border-emerald-900/30 rounded-lg p-2 text-emerald-400">
+                    <div className="flex items-center gap-2"><Icons.ShieldCheck /><span>Secure OAuth Active</span></div>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  </div>
+                  <div className="flex items-center gap-3 p-1">
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center font-semibold text-[11px] text-white" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>
+                      {userInitials}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium text-zinc-200 truncate group-hover:transition-colors" style={{}}>{activeUser.name}</p>
+                      <p className="text-[10px] text-zinc-500 truncate">{activeUser.role}</p>
                     </div>
                   </div>
-                  <button onClick={() => setIsMobileOpen(false)} className="md:hidden text-zinc-500 text-xs">✕</button>
                 </div>
-                <nav className="p-4 space-y-1.5">
-                  {menuItems.map((item) => {
-                    const Icon = item.icon;
-                    const isActive = activeTab === item.name;
-                    return (
-                      <button key={item.name} 
-                        onClick={() => { setActiveTab(item.name); setIsMobileOpen(false); }}
-                        className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all group ${
-                          isActive ? 'bg-[#1e1e22] text-indigo-400 border border-zinc-800/80 shadow-sm' : 'text-zinc-400 hover:bg-[#18181b] hover:text-zinc-200'
-                        }`}>
-                        <div className="flex items-center gap-3">
-                          <Icon />
-                          <span>{item.name}</span>
-                        </div>
-                        {item.count !== undefined && (
-                          <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${isActive ? 'bg-indigo-500/10 text-indigo-400' : 'bg-zinc-800 text-zinc-500'}`}>
-                            {item.count}
-                          </span>
-                        )}
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
-              
-              <div onClick={onProfileClick} className="p-4 border-t border-[#27272a] space-y-3 bg-[#161619] cursor-pointer hover:bg-zinc-900/60 transition-colors group">
-                <div className="flex items-center justify-between text-[10px] bg-emerald-950/20 border border-emerald-900/30 rounded-lg p-2 text-emerald-400">
-                  <div className="flex items-center gap-2">
-                    <Icons.ShieldCheck />
-                    <span>Secure OAuth Active</span>
-                  </div>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                </div>
-                <div className="flex items-center gap-3 p-1">
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-semibold text-[11px] text-white group-hover:scale-105 transition-transform">NK</div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium text-zinc-200 truncate group-hover:text-indigo-400 transition-colors">Navin Kukreja</p>
-                    <p className="text-[10px] text-zinc-500 truncate">Senior Counsel</p>
-                  </div>
-                </div>
-              </div>
-            </aside>
+              </aside>
+            </React.Fragment>
           );
         }
 
-        // 3. KPI METRICS BLOCK COMPONENT
         function MetricsGrid() {
           const kpis = [
-            { title: 'Documents Processed', value: '1,248', change: '+12% this week', color: 'text-indigo-400', icon: Icons.FileText },
-            { title: 'Avg Response Time', value: '1.4s', change: 'Gemini Cluster', color: 'text-cyan-400', icon: Icons.Clock },
-            { title: 'AI Accuracy Score', value: '99.4%', change: 'Human-in-loop verification', color: 'text-emerald-400', icon: Icons.CheckCircle2 },
-            { title: 'Active Legal Users', value: '42', change: 'Live nodes active', color: 'text-purple-400', icon: Icons.Database },
+            { title: 'Documents Processed', value: '1,248', change: '+12% this week', color: '#06b6d4', icon: Icons.FileText },
+            { title: 'Avg Response Time', value: '1.4s', change: 'Gemini Cluster', color: '#22d3ee', icon: Icons.Clock },
+            { title: 'AI Accuracy Score', value: '99.4%', change: 'Human-in-loop verification', color: '#10b981', icon: Icons.CheckCircle2 },
+            { title: 'Active Legal Users', value: '42', change: 'Live nodes active', color: '#a78bfa', icon: Icons.Database },
           ];
           return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
               {kpis.map((kpi) => {
                 const Icon = kpi.icon;
                 return (
                   <div key={kpi.title} className="bg-[#121214] border border-[#27272a] p-4 rounded-xl shadow-sm">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">{kpi.title}</span>
-                      <Icon className={kpi.color} />
+                      <span style={{color: kpi.color}}><Icon className="w-4 h-4" /></span>
                     </div>
                     <div className="flex items-baseline gap-1.5">
                       <span className="text-xl font-semibold text-zinc-100 font-mono">{kpi.value}</span>
@@ -219,94 +678,68 @@
           );
         }
 
-        // 4. WORKFLOW DOCUMENT INTERFACE WITH EMBEDDED DYNAMIC SEARCH FILTERS
         function DocumentWorkbench({ documents, onUploadStart, isUploading, uploadProgress, currentUploadingName, onDeleteDoc, searchQuery }) {
           const fileInputRef = React.useRef(null);
-
           const processFile = (file) => {
             if (!file) return;
-            onUploadStart({
-              name: file.name,
-              size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-              date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-            });
+            onUploadStart({ name: file.name, size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`, date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) });
           };
-
-          // Linear filtering process for file strings
-          const filteredDocs = documents.filter(doc => 
-            doc.name.toLowerCase().includes(searchQuery.toLowerCase())
-          );
+          const filteredDocs = documents.filter(doc => doc.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
           return (
-            <div className="space-y-4">
-              <div className="bg-[#121214] border border-[#27272a] rounded-xl p-5 space-y-4 shadow-sm">
+            <div className="space-y-4 w-full">
+              <div className="bg-[#121214] border border-[#27272a] rounded-xl p-4 sm:p-5 space-y-4 shadow-sm">
                 <div>
                   <h3 className="text-xs font-semibold text-zinc-200">Ingest New Contracts</h3>
                   <p className="text-[11px] text-zinc-500">Upload agreements to index them into the Vertex AI Vector DB cluster.</p>
                 </div>
-
                 <input type="file" ref={fileInputRef} className="hidden" accept=".pdf,.txt,.doc,.docx" onChange={(e) => processFile(e.target.files[0])} />
-
-                <div 
-                  onClick={() => fileInputRef.current.click()}
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => { e.preventDefault(); processFile(e.dataTransfer.files[0]); }}
-                  className="border border-dashed border-zinc-800 hover:border-indigo-500/50 bg-[#161619]/40 rounded-xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all group"
-                >
+                <div onClick={() => fileInputRef.current.click()} onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); processFile(e.dataTransfer.files[0]); }}
+                  className="border border-dashed border-zinc-800 hover:border-cyan-500/50 bg-[#161619]/40 rounded-xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all text-center">
                   <Icons.UploadCloud />
-                  <p className="text-xs text-zinc-300 font-medium group-hover:text-indigo-400 transition-colors">Drag & drop local files here, or click to browse</p>
+                  <p className="text-xs text-zinc-300 font-medium hover:text-cyan-400 transition-colors">Drag & drop local files here, or click to browse</p>
                   <p className="text-[10px] text-zinc-500">Supports PDF, TXT, DOCX. Live OCR parsing active.</p>
                 </div>
-
                 {isUploading && (
                   <div className="bg-[#18181b] border border-zinc-800/60 rounded-lg p-3">
                     <div className="flex items-center justify-between text-[11px] mb-1.5">
-                      <div className="flex items-center gap-2 text-zinc-300">
-                        <Icons.RefreshCw className="text-indigo-400 animate-spin w-3 h-3" />
-                        <span className="font-medium truncate max-w-[220px]">{currentUploadingName}</span>
+                      <div className="flex items-center gap-2 text-zinc-300 min-w-0">
+                        <Icons.RefreshCw className="animate-spin w-3 h-3 flex-shrink-0" style={{color:'#06b6d4'}} />
+                        <span className="font-medium truncate">{currentUploadingName}</span>
                       </div>
-                      <span className="text-zinc-400 font-mono">{uploadProgress}%</span>
+                      <span className="text-zinc-400 font-mono ml-2">{uploadProgress}%</span>
                     </div>
                     <div className="w-full bg-zinc-900 h-1 rounded-full overflow-hidden">
-                      <div className="bg-indigo-500 h-full rounded-full transition-all duration-150" style={{ width: `${uploadProgress}%` }}></div>
+                      <div className="h-full rounded-full transition-all duration-150" style={{ width: `${uploadProgress}%`, background:'linear-gradient(90deg,#0891b2,#059669)' }}></div>
                     </div>
                   </div>
                 )}
               </div>
-
-              {/* SEARCH CONTAINER LAYER INTERACTION */}
-              <div className="bg-[#121214] border border-[#27272a] rounded-xl overflow-hidden shadow-sm">
-                <div className="p-4 border-b border-[#27272a] flex items-center justify-between">
+              <div className="bg-[#121214] border border-[#27272a] rounded-xl overflow-hidden shadow-sm w-full">
+                <div className="p-4 border-b border-[#27272a] flex items-center justify-between flex-wrap gap-2">
                   <h3 className="text-xs font-semibold text-zinc-200">Active Document Repository</h3>
-                  {searchQuery && (
-                    <span className="text-[10px] bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded text-indigo-400 font-mono">
-                      Filtering: "{searchQuery}"
-                    </span>
-                  )}
+                  {searchQuery && <span className="text-[10px] px-2 py-0.5 rounded font-mono truncate" style={{background:'rgba(6,182,212,0.1)', color:'#06b6d4', border:'1px solid rgba(6,182,212,0.2)'}}>Filtering: "{searchQuery}"</span>}
                 </div>
-                
-                <div className="divide-y divide-[#27272a]">
+                <div className="divide-y divide-[#27272a] overflow-x-auto w-full">
                   {filteredDocs.length > 0 ? (
                     filteredDocs.map((doc) => (
-                      <div key={doc.id} className="p-3.5 flex items-center justify-between hover:bg-[#161619]/60 transition-colors group animate-fade-in">
-                        <div className="flex items-center gap-3">
+                      <div key={doc.id} className="p-3.5 flex items-center justify-between hover:bg-[#161619]/60 transition-colors group min-w-[280px]">
+                        <div className="flex items-center gap-3 min-w-0">
                           <Icons.FileText />
-                          <div>
-                            <p className="text-xs font-medium text-zinc-200 truncate max-w-[240px] sm:max-w-xs">{doc.name}</p>
+                          <div className="min-w-0">
+                            <p className="text-xs font-medium text-zinc-200 truncate max-w-[180px] sm:max-w-xs">{doc.name}</p>
                             <p className="text-[10px] text-zinc-500">{doc.size} • {doc.date}</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 flex-shrink-0 ml-2">
                           {doc.status === 'Indexed' && <span className="text-[10px] bg-emerald-950/30 text-emerald-400 border border-emerald-900/40 px-2 py-0.5 rounded-md font-medium">Indexed</span>}
                           {doc.status === 'Failed' && <span className="text-[10px] bg-rose-950/30 text-rose-400 border border-rose-900/40 px-2 py-0.5 rounded-md font-medium">Failed</span>}
-                          <button onClick={() => onDeleteDoc(doc.id, doc.name)} className="text-zinc-600 hover:text-rose-400 text-xs px-2 transition-colors opacity-0 group-hover:opacity-100">✕</button>
+                          <button onClick={() => onDeleteDoc(doc.id, doc.name)} className="text-zinc-600 hover:text-rose-400 text-xs px-2 transition-colors">✕</button>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <div className="p-8 text-center text-zinc-500 text-xs italic">
-                      No matching files indexed in the active vector space.
-                    </div>
+                    <div className="p-8 text-center text-zinc-500 text-xs italic">No matching files indexed in the active vector space.</div>
                   )}
                 </div>
               </div>
@@ -314,86 +747,43 @@
           );
         }
 
-        // 5. GEMINI DYNAMIC CHAT PANEL INTERFACE
         function ChatPanel({ selectedModel, isStandalone }) {
           const [messages, setMessages] = React.useState([
             { sender: 'user', text: 'What are the key risks in this contract?', time: '1:52 PM' },
-            { sender: 'ai', text: 'Based on my analysis of the uploaded Master Services Agreement via the Vertex AI pipeline, I have identified the following critical legal risks:', 
-              bullets: [
-                'Termination clause requires an asymmetrical 90-day notice.',
-                'Vendor liability cap is undefined and open to uncapped damages.',
-                'No explicit data retention limitation found post contract termination.',
-                'Missing standard confidentiality duration survival terms.'
-              ], time: '1:52 PM' }
+            { sender: 'ai', text: 'Based on my analysis of the uploaded Master Services Agreement via the Vertex AI pipeline, I have identified the following critical legal risks:', bullets: ['Termination clause requires an asymmetrical 90-day notice.', 'Vendor liability cap is undefined and open to uncapped damages.', 'No explicit data retention limitation found post contract termination.'], time: '1:52 PM' }
           ]);
           const [inputMessage, setInputMessage] = React.useState('');
           const [isTyping, setIsTyping] = React.useState(false);
-
-          const suggestedPrompts = [
-            { label: 'Summarize Contract', text: 'Can you summarize this contract?' },
-            { label: 'Find Termination Clauses', text: 'Find termination clauses' },
-            { label: 'Highlight Payments', text: 'Highlight payment obligations' },
-            { label: 'List Compliance Risks', text: 'List compliance risks' }
-          ];
 
           const handleSend = (userText) => {
             if (!userText.trim()) return;
             setMessages(prev => [...prev, { sender: 'user', text: userText, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]);
             setInputMessage('');
             setIsTyping(true);
-
             setTimeout(() => {
               setIsTyping(false);
-              const cleanText = userText.toLowerCase();
-              let aiReply = { sender: 'ai', text: '', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) };
-
-              if (cleanText.includes('summary') || cleanText.includes('summarize')) {
-                aiReply.text = `Here is the executive summary generated by ${selectedModel}:`;
-                aiReply.bullets = [
-                  'Agreement Type: Master Services Framework.',
-                  'Scope: Enterprise software deployments and integration mapping.',
-                  'Ownership: Complete infrastructure core remains vendor intellectual property.'
-                ];
-              } else if (cleanText.includes('termination') || cleanText.includes('clause')) {
-                aiReply.text = `Analysis of termination frameworks under active context:`;
-                aiReply.bullets = [
-                  'Section 14.2: Termination is permissible via 90-day explicit written notices.',
-                  'Breach Window: Standard 30-day structural remediation windows apply.'
-                ];
-              } else if (cleanText.includes('compliance') || cleanText.includes('risk')) {
-                aiReply.text = `Compliance auditing vectors identified:`;
-                aiReply.bullets = [
-                  'Data Laws: Cross-border metadata handling bounds are ambiguously logged.',
-                  'Audit Frequency: Bound strictly to single-annual inspections.'
-                ];
-              } else {
-                aiReply.text = `Query processed using ${selectedModel}. The syntax balances commercially viable enterprise templates with no critical risk parameters observed for this block.`;
-              }
-
-              setMessages(prev => [...prev, aiReply]);
+              setMessages(prev => [...prev, { sender: 'ai', text: `Query processed using ${selectedModel}. Node parameters verified completely.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]);
             }, 1100);
           };
 
           return (
-            <div className={`bg-[#121214] border border-[#27272a] rounded-xl flex flex-col overflow-hidden shadow-sm ${isStandalone ? 'h-[calc(100vh-11rem)]' : 'h-[calc(100vh-15.5rem)]'}`}>
+            <div className={`bg-[#121214] border border-[#27272a] rounded-xl flex flex-col overflow-hidden shadow-sm w-full ${isStandalone ? 'h-[calc(100vh-11rem)]' : 'h-[500px] xl:h-[calc(100vh-15.5rem)]'}`}>
               <div className="p-4 border-b border-[#27272a] bg-[#161619] flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                  <span className="inline-block w-1.5 h-1.5 rounded-full animate-pulse" style={{background:'#06b6d4'}}></span>
                   <span className="text-xs font-semibold text-zinc-200">Gemini Review Engine</span>
                 </div>
-                <span className="text-[10px] text-indigo-400 font-mono bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">{selectedModel}</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded border" style={{color:'#06b6d4', background:'rgba(6,182,212,0.1)', borderColor:'rgba(6,182,212,0.2)'}}>{selectedModel}</span>
               </div>
-              
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.map((msg, i) => (
                   <div key={i} className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
-                    <div className={`text-xs p-3.5 rounded-xl max-w-[90%] border ${
-                      msg.sender === 'user' ? 'bg-indigo-600 border-indigo-500 text-white rounded-br-none' : 'bg-[#18181b] border-zinc-800 text-zinc-200 rounded-bl-none'
-                    }`}>
+                    <div className={`text-xs p-3.5 rounded-xl max-w-[90%] border ${msg.sender === 'user' ? 'text-white rounded-br-none' : 'bg-[#18181b] border-zinc-800 text-zinc-200 rounded-bl-none'}`}
+                      style={msg.sender === 'user' ? {background:'linear-gradient(135deg,#0891b2,#059669)', borderColor:'#0891b2'} : {}}>
                       <p className="leading-relaxed">{msg.text}</p>
                       {msg.bullets && (
                         <ul className="mt-2.5 space-y-1.5 list-disc pl-4 text-zinc-300 border-t border-zinc-800/80 pt-2">
-                          {msg.bullets.map((b, idx) => <li key={idx} className="marker:text-indigo-400">{b}</li>)}
+                          {msg.bullets.map((b, idx) => <li key={idx} style={{markerColor:'#06b6d4'}}>{b}</li>)}
                         </ul>
                       )}
                     </div>
@@ -401,29 +791,15 @@
                 ))}
                 {isTyping && (
                   <div className="flex items-center gap-2 text-[10px] text-zinc-500 bg-zinc-900/40 px-3 py-2 border border-zinc-800 rounded-lg w-max animate-pulse">
-                    <Icons.RefreshCw className="animate-spin text-indigo-400 w-3 h-3" />
+                    <Icons.RefreshCw className="animate-spin w-3 h-3" style={{color:'#06b6d4'}} />
                     <span>Gemini processing token sequences...</span>
                   </div>
                 )}
               </div>
-
-              <div className="p-2 bg-[#141417] border-t border-[#27272a] flex gap-2 overflow-x-auto no-scrollbar">
-                {suggestedPrompts.map((p) => (
-                  <button key={p.label} onClick={() => handleSend(p.text)}
-                    className="text-[10px] font-medium text-zinc-400 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:text-zinc-200 px-2.5 py-1.5 rounded-lg whitespace-nowrap transition-colors flex items-center gap-1">
-                    {p.label} <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                  </button>
-                ))}
-              </div>
-
               <div className="p-3 bg-[#161619] border-t border-[#27272a] flex gap-2 items-center mt-auto">
                 <button className="text-zinc-500 hover:text-zinc-300 px-1"><Icons.Paperclip /></button>
-                <input type="text" value={inputMessage} 
-                  onChange={(e) => setInputMessage(e.target.value)} 
-                  onKeyDown={(e) => e.key === 'Enter' && handleSend(inputMessage)}
-                  placeholder="Ask Gemini to extract clauses or map liabilities..." 
-                  className="w-full bg-[#1c1c1f] text-xs text-zinc-200 p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-indigo-500" />
-                <button onClick={() => handleSend(inputMessage)} className="bg-indigo-600 hover:bg-indigo-500 text-white p-2.5 rounded-lg text-xs font-medium transition-all shadow-md"><Icons.Send /></button>
+                <input type="text" value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSend(inputMessage)} placeholder="Ask Gemini to extract clauses..." className="w-full bg-[#1c1c1f] text-xs text-zinc-200 p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-cyan-500" />
+                <button onClick={() => handleSend(inputMessage)} className="text-white p-2.5 rounded-lg text-xs font-medium transition-all shadow-md" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}><Icons.Send /></button>
               </div>
             </div>
           );
@@ -431,14 +807,14 @@
 
         function AnalyticsView() {
           return (
-            <div className="bg-[#121214] border border-[#27272a] rounded-xl p-6 space-y-4 shadow-sm">
+            <div className="bg-[#121214] border border-[#27272a] rounded-xl p-6 space-y-4 shadow-sm w-full">
               <div>
                 <h3 className="text-sm font-semibold text-zinc-200">System Performance Telemetry</h3>
                 <p className="text-xs text-zinc-500">Live operational monitoring of your deployed Vertex AI container models.</p>
               </div>
-              <div className="h-48 border border-zinc-800 bg-zinc-900/30 rounded-xl flex items-end p-4 gap-3 justify-around">
+              <div className="h-48 border border-zinc-800 bg-zinc-900/30 rounded-xl flex items-end p-4 gap-2 justify-around">
                 {[45, 60, 32, 75, 90, 65, 85, 50, 95, 70].map((h, i) => (
-                  <div key={i} className="w-full bg-gradient-to-t from-indigo-600 to-violet-500 rounded-t animate-pulse" style={{ height: `${h}%`, animationDelay: `${i*100}ms` }}></div>
+                  <div key={i} className="w-full rounded-t" style={{ height: `${h}%`, background:`linear-gradient(to top, #0891b2, #059669)` }}></div>
                 ))}
               </div>
             </div>
@@ -447,17 +823,15 @@
 
         function SettingsView({ selectedModel, setSelectedModel }) {
           return (
-            <div className="bg-[#121214] border border-[#27272a] rounded-xl p-6 space-y-5 shadow-sm">
+            <div className="bg-[#121214] border border-[#27272a] rounded-xl p-5 sm:p-6 space-y-5 shadow-sm w-full">
               <div>
                 <h3 className="text-sm font-semibold text-zinc-200">Global Engine Configurations</h3>
                 <p className="text-xs text-zinc-500">Configure your security boundaries and pipeline weights.</p>
               </div>
               <div className="space-y-4 divide-y divide-zinc-800/60">
-                <div className="flex items-center justify-between pt-2">
-                  <div>
-                    <label className="text-xs font-medium text-zinc-300 block">Default LLM Orchestrator</label>
-                  </div>
-                  <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="bg-zinc-900 border border-zinc-800 text-xs rounded-lg p-2 text-zinc-300">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2">
+                  <label className="text-xs font-medium text-zinc-300 block">Default LLM Orchestrator</label>
+                  <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="bg-zinc-900 border border-zinc-800 text-xs rounded-lg p-2 text-zinc-300 w-full sm:w-auto">
                     <option value="Gemini 1.5 Pro">Gemini 1.5 Pro</option>
                     <option value="Gemini Flash">Gemini Flash</option>
                   </select>
@@ -467,37 +841,45 @@
           );
         }
 
-        // 6. MAIN APP MAIN MANAGER BLOCK (WITH CORE FILTER AND QUERY SHARER STATE)
+        // ==========================================
+        // MAIN ROUTER ORCHESTRATOR
+        // ==========================================
         function App() {
+          const [viewMode, setViewMode] = React.useState('landing');
+          const [isAuthOpen, setIsAuthOpen] = React.useState(false);
+          const [registeredUsers, setRegisteredUsers] = React.useState([{ name: 'Navin Kukreja', email: 'counsel@leximind.ai', password: 'password123', role: 'Senior Legal Counsel' }]);
+          const [user, setUser] = React.useState({ name: 'Navin Kukreja', email: 'counsel@leximind.ai', role: 'Senior Legal Counsel' });
           const [activeTab, setActiveTab] = React.useState('Dashboard');
-          const [selectedModel, setSelectedModel] = React.useState('Gemini 1.5 Pro');
+          const [selectedModel, setSelectedModel] = React.useState('Gemini 1. Pro');
           const [isMobileSidebarOpen, setIsMobileSidebarOpen] = React.useState(false);
           const [showProfileModal, setShowProfileModal] = React.useState(false);
-          
-          // Shared Dynamic Search State Variable
           const [searchQuery, setSearchQuery] = React.useState('');
-          
           const [isUploading, setIsUploading] = React.useState(false);
           const [uploadProgress, setUploadProgress] = React.useState(0);
           const [currentUploadingName, setCurrentUploadingName] = React.useState('');
-          
           const [notifications, setNotifications] = React.useState([
-            { id: 1, text: "Navin Kukreja initialized secure context mapping.", time: "10 mins ago", type: "create", read: false },
+            { id: 1, text: "System initialized context credentials mapping.", time: "10 mins ago", type: "create", read: false },
             { id: 2, text: "Data_Processing_Addendum_v4.pdf text layers parsed.", time: "1 hr ago", type: "create", read: true }
           ]);
-          
           const [documents, setDocuments] = React.useState([
             { id: 1, name: 'MSLA_Vendor_Agreement_2026.pdf', size: '2.4 MB', date: 'May 24, 2026', status: 'Indexed' },
             { id: 2, name: 'Data_Processing_Addendum_v4.pdf', size: '1.1 MB', date: 'May 25, 2026', status: 'Indexed' },
             { id: 3, name: 'NDA_Executive_Search_Draft.pdf', size: '420 KB', date: 'May 26, 2026', status: 'Failed' },
           ]);
 
+          const handleNewAuthTrigger = (signUpRequested) => {
+            setIsAuthOpen(true);
+            setTimeout(() => { window.dispatchEvent(new CustomEvent('openAuthModal', { detail: { signUp: signUpRequested } })); }, 50);
+          };
+
+          const handleRegisterUser = (newUserData) => { setRegisteredUsers(prev => [...prev, newUserData]); };
+          const handleAuthSuccess = (userData) => { setUser(userData); setViewMode('app'); };
+
           const handleNewUpload = (meta) => {
             if (isUploading) return;
             setCurrentUploadingName(meta.name);
             setIsUploading(true);
             setUploadProgress(0);
-
             const interval = setInterval(() => {
               setUploadProgress((oldProgress) => {
                 if (oldProgress >= 100) {
@@ -517,63 +899,53 @@
             setNotifications(prev => [{ id: Date.now(), text: `${name} deleted from indexes.`, time: "Just Now", type: "delete", read: false }, ...prev]);
           };
 
+          if (viewMode === 'landing') {
+            return (
+              <React.Fragment>
+                <LandingPage onTriggerAuth={handleNewAuthTrigger} />
+                <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} onAuthSuccess={handleAuthSuccess} registeredUsers={registeredUsers} onRegisterUser={handleRegisterUser} />
+              </React.Fragment>
+            );
+          }
+
           return (
             <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex overflow-hidden w-full relative">
-              <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} docCount={documents.length} isMobileOpen={isMobileSidebarOpen} setIsMobileOpen={setIsMobileSidebarOpen} onProfileClick={() => setShowProfileModal(true)} />
-              
-              <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-                <Header selectedModel={selectedModel} setSelectedModel={setSelectedModel} onToggleSidebar={() => setIsMobileSidebarOpen(true)} onProfileClick={() => setShowProfileModal(true)} notifications={notifications} setNotifications={setNotifications} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-                
-                <main className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
+              <Sidebar activeUser={user} activeTab={activeTab} setActiveTab={setActiveTab} docCount={documents.length} isMobileOpen={isMobileSidebarOpen} setIsMobileOpen={setIsMobileSidebarOpen} onProfileClick={() => setShowProfileModal(true)} onBackToLanding={() => setViewMode('landing')} />
+              <div className="flex-1 flex flex-col min-w-0 overflow-hidden h-screen">
+                <Header activeUser={user} selectedModel={selectedModel} setSelectedModel={setSelectedModel} onToggleSidebar={() => setIsMobileSidebarOpen(true)} onProfileClick={() => setShowProfileModal(true)} notifications={notifications} setNotifications={setNotifications} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+                <main className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6 w-full">
                   {activeTab === 'Dashboard' && (
-                    <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-                      <div className="xl:col-span-12"><MetricsGrid /></div>
-                      <div className="xl:col-span-7">
-                        <DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} searchQuery={searchQuery} />
-                      </div>
-                      <div className="xl:col-span-5 space-y-4">
-                        <ChatPanel selectedModel={selectedModel} isStandalone={false} />
-                      </div>
+                    <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start w-full">
+                      <div className="xl:col-span-12 w-full"><MetricsGrid /></div>
+                      <div className="xl:col-span-7 w-full"><DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} searchQuery={searchQuery} /></div>
+                      <div className="xl:col-span-5 space-y-4 w-full"><ChatPanel selectedModel={selectedModel} isStandalone={false} /></div>
                     </div>
                   )}
-
-                  {activeTab === 'Documents' && (
-                    <div className="max-w-4xl mx-auto w-full">
-                      <DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} searchQuery={searchQuery} />
-                    </div>
-                  )}
-
-                  {activeTab === 'AI Chat' && (
-                    <div className="max-w-4xl mx-auto w-full"><ChatPanel selectedModel={selectedModel} isStandalone={true} /></div>
-                  )}
-
-                  {activeTab === 'Analytics' && (
-                    <div className="max-w-4xl mx-auto space-y-6 w-full"><MetricsGrid /><AnalyticsView /></div>
-                  )}
-
-                  {activeTab === 'Settings' && (
-                    <div className="max-w-2xl mx-auto w-full"><SettingsView selectedModel={selectedModel} setSelectedModel={setSelectedModel} /></div>
-                  )}
+                  {activeTab === 'Documents' && (<div className="max-w-4xl mx-auto w-full"><DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} searchQuery={searchQuery} /></div>)}
+                  {activeTab === 'AI Chat' && (<div className="max-w-4xl mx-auto w-full"><ChatPanel selectedModel={selectedModel} isStandalone={true} /></div>)}
+                  {activeTab === 'Analytics' && (<div className="max-w-4xl mx-auto space-y-6 w-full"><MetricsGrid /><AnalyticsView /></div>)}
+                  {activeTab === 'Settings' && (<div className="max-w-2xl mx-auto w-full"><SettingsView selectedModel={selectedModel} setSelectedModel={setSelectedModel} /></div>)}
                 </main>
               </div>
 
-              {/* MODAL CONFIG */}
               {showProfileModal && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
                   <div className="bg-[#121214] border border-[#27272a] rounded-xl max-w-sm w-full p-6 space-y-4 relative">
-                    <button onClick={() => setShowProfileModal(false)} className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-300">✕</button>
+                    <button onClick={() => setShowProfileModal(false)} className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-300 transition-colors">✕</button>
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-bold text-sm text-white">NK</div>
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm text-white" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>
+                        {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                      </div>
                       <div>
-                        <h4 className="font-semibold text-zinc-100 text-sm">Navin Kukreja</h4>
-                        <p className="text-xs text-zinc-500">Senior Legal Counsel</p>
+                        <h4 className="font-semibold text-zinc-100 text-sm">{user.name}</h4>
+                        <p className="text-xs text-zinc-500">{user.role}</p>
                       </div>
                     </div>
                     <div className="bg-zinc-900/60 rounded-lg p-3 border border-zinc-800 text-[11px] font-mono space-y-1.5 text-zinc-400">
-                      <div><span className="text-zinc-500">Security Access:</span> Tier-1 Legal Counsel</div>
-                      <div><span className="text-zinc-500">Active API Session:</span> live_tok_48227a</div>
+                      <div><span className="text-zinc-500">Authorized Node:</span> {user.email}</div>
+                      <div><span className="text-zinc-500">Security Access:</span> Tier-1 Dynamic Session</div>
                     </div>
-                    <button onClick={() => setShowProfileModal(false)} className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-lg text-xs font-medium transition-colors">Close Profile Panel</button>
+                    <button onClick={() => { setViewMode('landing'); setShowProfileModal(false); }} className="w-full bg-rose-950/40 hover:bg-rose-900/30 border border-rose-900/40 text-rose-400 py-2.5 rounded-lg text-xs font-semibold transition-colors">Sign Out</button>
                   </div>
                 </div>
               )}
@@ -604,24 +976,150 @@
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* ── GRADIENT TEXT ── */
+        .gradient-text {
+            background: linear-gradient(to right, #06b6d4, #10b981, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ── PREMIUM CARD — glowing hover ── */
+        .premium-card {
+            border: 1px solid #27272a;
+            background-color: rgba(9, 9, 11, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 0.75rem;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .premium-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(600px circle at var(--mouse-x,50%) var(--mouse-y,50%), rgba(6,182,212,0.06), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+            border-radius: inherit;
+        }
+        .premium-card:hover::before { opacity: 1; }
+        .premium-card:hover {
+            border-color: rgba(6, 182, 212, 0.35);
+            background-color: rgba(14, 20, 27, 0.55);
+            box-shadow: 0 0 32px rgba(6,182,212,0.08), 0 8px 32px rgba(0,0,0,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* ── DOT GRID BACKGROUND ── */
+        .dot-grid {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        /* ── ANIMATED GRADIENT BORDER on hero badge ── */
+        .glow-badge {
+            background: linear-gradient(135deg, rgba(6,182,212,0.12), rgba(16,185,129,0.08));
+            border: 1px solid rgba(6,182,212,0.25);
+            box-shadow: 0 0 20px rgba(6,182,212,0.08);
+        }
+
+        /* ── SECTION DIVIDER GLOW LINE ── */
+        .glow-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(6,182,212,0.4), rgba(16,185,129,0.3), transparent);
+        }
+
+        /* ── SHIMMER ANIMATION (stat numbers) ── */
+        @keyframes shimmer {
+            0%   { background-position: -400px 0; }
+            100% { background-position: 400px 0; }
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, #06b6d4 25%, #10b981 50%, #f59e0b 75%, #06b6d4 100%);
+            background-size: 800px 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+
+        /* ── FLOATING ORB PULSES ── */
+        @keyframes orbFloat {
+            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+            50%       { transform: translateY(-20px) scale(1.04); opacity: 0.9; }
+        }
+        .orb { animation: orbFloat 7s ease-in-out infinite; }
+        .orb2 { animation: orbFloat 9s ease-in-out infinite reverse; }
+
+        /* ── CTA BUTTON GLOW PULSE ── */
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(6,182,212,0.25), 0 0 40px rgba(16,185,129,0.1); }
+            50%       { box-shadow: 0 0 35px rgba(6,182,212,0.45), 0 0 60px rgba(16,185,129,0.2); }
+        }
+        .cta-btn { animation: glowPulse 3s ease-in-out infinite; }
+
+        /* ── PRICING POPULAR ── */
+        .pricing-popular {
+            border-color: #06b6d4 !important;
+            background: linear-gradient(135deg, rgba(6,182,212,0.07), rgba(16,185,129,0.04)) !important;
+            position: relative;
+            box-shadow: 0 0 40px rgba(6,182,212,0.1), inset 0 1px 0 rgba(6,182,212,0.15);
+        }
+
+        /* ── FEATURE CARD NUMBER TAG ── */
+        .feat-num {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1;
+            color: rgba(6,182,212,0.04);
+            font-family: monospace;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* ── FOOTER ── */
+        .site-footer { background: #070709; border-top: none; }
+
+        /* ── MOBILE MENU SLIDE ── */
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .mobile-menu { animation: slideDown 0.2s ease; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            .hero-title { font-size: 2.1rem !important; line-height: 1.15 !important; }
+            .stats-grid { grid-template-columns: 1fr 1fr !important; }
+            .pricing-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 768px) {
+            .pricing-grid { grid-template-columns: 1fr !important; }
+            .features-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+        @media (max-width: 480px) {
+            .features-grid { grid-template-columns: 1fr !important; }
+        }
     </style>
 </head>
 <body class="antialiased">
     <div id="root"></div>
 
     <script type="text/babel">
-        // Custom Inline SVG Component Map for 100% Stability
         const Icons = {
           Layers: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>,
           FileText: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>,
           MessageSquare: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>,
           BarChart2: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>,
-          Settings: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>,
+          Settings: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>,
           ShieldCheck: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 11l2 2 4-4"/></svg>,
           Sparkles: ({className}) => <svg className={className || "w-4 h-4"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>,
           Search: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>,
           Cpu: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>,
-          UploadCloud: () => <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>,
+          UploadCloud: () => <svg className="w-6 h-6" style={{color:'#06b6d4'}} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>,
           CheckCircle2: ({className}) => <svg className={className || "w-3 h-3"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>,
           RefreshCw: ({className}) => <svg className={className || "w-3 h-3"} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 11-.57-8.38l5.67-5.67"/></svg>,
           Clock: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>,
@@ -630,13 +1128,483 @@
           Send: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>,
           Paperclip: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>,
           Menu: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>,
-          Bell: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+          Bell: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>,
+          Check: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>,
+          Twitter: () => <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.747-8.77-8.18-10.73h6.5l4.244 5.622 5.19-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>,
+          Linkedin: () => <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>,
+          Github: () => <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>,
         };
 
-        // 1. HEADER COMPONENT WITH FIXED ALIGNED SEARCH TERMINAL CONNECTIONS
-        function Header({ selectedModel, setSelectedModel, onToggleSidebar, onProfileClick, notifications, setNotifications, searchQuery, setSearchQuery }) {
+        // ==========================================
+        // DYNAMIC AUTHENTICATION MODAL (FULLY UNLOCKED BYPASS)
+        // ==========================================
+        function AuthModal({ isOpen, onClose, onAuthSuccess, registeredUsers, onRegisterUser }) {
+          const [isSignUp, setIsSignUp] = React.useState(false);
+          const [email, setEmail] = React.useState('');
+          const [password, setPassword] = React.useState('');
+          const [name, setName] = React.useState('');
+          const [regSuccessMsg, setRegSuccessMsg] = React.useState(false);
+
+          React.useEffect(() => {
+            const handleToggle = (e) => {
+              setIsSignUp(e.detail.signUp);
+              setRegSuccessMsg(false);
+            };
+            window.addEventListener('openAuthModal', handleToggle);
+            return () => window.removeEventListener('openAuthModal', handleToggle);
+          }, []);
+
+          if (!isOpen) return null;
+
+          const handleSubmit = (e) => {
+            e.preventDefault();
+            if (isSignUp) {
+              if (!name.trim() || !email.trim() || !password.trim()) return;
+              onRegisterUser({ name: name.trim(), email: email.trim().toLowerCase(), password: password, role: 'Associate Counsel' });
+              setRegSuccessMsg(true);
+              setIsSignUp(false);
+              setName('');
+            } else {
+              if (!email.trim() || !password.trim()) return;
+              const foundUser = registeredUsers.find(u => u.email === email.trim().toLowerCase());
+              onAuthSuccess({ name: foundUser ? foundUser.name : (email.split('@')[0].toUpperCase()), email: email.trim(), role: foundUser ? foundUser.role : 'Senior Legal Counsel' });
+              setRegSuccessMsg(false);
+              onClose();
+            }
+          };
+
+          return (
+            <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4">
+              <div className="bg-[#121214] border border-[#27272a] rounded-xl max-w-sm w-full p-6 space-y-4 relative shadow-2xl">
+                <button onClick={() => { onClose(); setRegSuccessMsg(false); }} className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-300 transition-colors">✕</button>
+                <div className="text-center">
+                  <h3 className="text-lg font-bold text-white">{isSignUp ? 'Create Account' : 'Sign in'}</h3>
+                  <p className="text-zinc-500 text-xs mt-1">{isSignUp ? 'Sign up to build legal repositories' : 'Enter authorized credentials to unlock telemetry'}</p>
+                </div>
+                {regSuccessMsg && (
+                  <div className="bg-emerald-950/30 border border-emerald-500/20 text-emerald-400 text-[11px] p-2.5 rounded-lg text-center font-medium">
+                    ✓ Registration Complete! Please Sign In with the exact account now.
+                  </div>
+                )}
+                <form onSubmit={handleSubmit} className="space-y-3.5 pt-1">
+                  {isSignUp && (
+                    <div>
+                      <label className="text-[11px] text-zinc-400 font-medium block mb-1">Full Name</label>
+                      <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Alex Corporate" className="w-full bg-[#1c1c1f] text-xs text-white p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-cyan-500" required />
+                    </div>
+                  )}
+                  <div>
+                    <label className="text-[11px] text-zinc-400 font-medium block mb-1">Corporate Email</label>
+                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="counsel@company.com" className="w-full bg-[#1c1c1f] text-xs text-white p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-cyan-500" required />
+                  </div>
+                  <div>
+                    <label className="text-[11px] text-zinc-400 font-medium block mb-1">Security Vault Password</label>
+                    <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••••••" className="w-full bg-[#1c1c1f] text-xs text-white p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-cyan-500" required />
+                  </div>
+                  <button type="submit" className="w-full text-white py-2.5 rounded-lg text-xs font-semibold transition-all shadow-md mt-2" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>
+                    {isSignUp ? 'Register' : 'Sign In'}
+                  </button>
+                </form>
+                <div className="text-center pt-2 text-xs border-t border-zinc-900 text-zinc-500">
+                  {isSignUp ? 'Already have Account?' : "Don't have an account?"}{' '}
+                  <button type="button" onClick={() => { setIsSignUp(!isSignUp); setRegSuccessMsg(false); }} className="text-cyan-400 hover:underline font-medium">
+                    {isSignUp ? 'Sign In' : 'Register'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        // ==========================================
+        // MARKETING LANDING COMPONENT
+        // ==========================================
+        function LandingNavbar({ onTriggerAuth }) {
+          const [isScrolled, setIsScrolled] = React.useState(false);
+          const [mobileOpen, setMobileOpen] = React.useState(false);
+
+          React.useEffect(() => {
+            const handleScroll = () => { setIsScrolled(window.scrollY > 20); if (window.scrollY > 20) setMobileOpen(false); };
+            window.addEventListener('scroll', handleScroll);
+            return () => window.removeEventListener('scroll', handleScroll);
+          }, []);
+
+          const navLinks = [
+            { href: '#features', label: 'Key Capabilities' },
+            { href: '#workflow', label: 'How It Works' },
+            { href: '#security', label: 'Trust Boundary' },
+            { href: '#pricing', label: 'Pricing Matrix' },
+          ];
+
+          return (
+            <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-[#09090b]/95 backdrop-blur-xl border-b border-zinc-800/60 py-3' : 'bg-transparent py-5'}`}>
+              <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                {/* ── Desktop row ── */}
+                <div className="flex items-center justify-between">
+                  {/* Logo */}
+                  <div className="flex items-center space-x-2.5 flex-shrink-0">
+                    <div className="h-9 w-9 rounded-xl flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-900/30" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>L</div>
+                    <span className="text-xl font-bold tracking-tight text-white">Lexi<span style={{color:'#06b6d4'}}>Mind</span> <span className="text-[10px] text-zinc-500 font-mono border border-zinc-800 rounded-full bg-zinc-900/80 px-2 py-0.5 ml-0.5">AI</span></span>
+                  </div>
+
+                  {/* Desktop links */}
+                  <div className="hidden md:flex items-center space-x-7 text-sm font-medium text-zinc-400">
+                    {navLinks.map(l => (
+                      <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)}
+                        className="relative hover:text-white transition-colors group py-1">
+                        {l.label}
+                        <span className="absolute bottom-0 left-0 h-px w-0 group-hover:w-full transition-all duration-300" style={{background:'linear-gradient(to right,#06b6d4,#10b981)'}}></span>
+                      </a>
+                    ))}
+                  </div>
+
+                  {/* Desktop CTA + hamburger */}
+                  <div className="flex items-center gap-3">
+                    <button onClick={() => onTriggerAuth(false)} className="hidden sm:block text-sm font-medium text-zinc-400 hover:text-white transition-colors">Sign In</button>
+                    <button onClick={() => onTriggerAuth(true)} className="hidden sm:block text-xs sm:text-sm font-semibold text-white px-4 py-2 rounded-xl transition-all" style={{background:'linear-gradient(135deg,#0891b2,#059669)', boxShadow:'0 4px 16px rgba(6,182,212,0.2)'}}>Register</button>
+
+                    {/* Hamburger — mobile only */}
+                    <button
+                      onClick={() => setMobileOpen(o => !o)}
+                      className="md:hidden flex flex-col gap-[5px] p-2 rounded-lg border border-zinc-800 bg-zinc-900/60 transition-colors hover:border-cyan-800"
+                      aria-label="Toggle menu"
+                    >
+                      <span className={`block h-0.5 w-5 bg-zinc-300 transition-all duration-300 origin-center ${mobileOpen ? 'rotate-45 translate-y-[7px]' : ''}`}></span>
+                      <span className={`block h-0.5 bg-zinc-300 transition-all duration-300 ${mobileOpen ? 'w-0 opacity-0' : 'w-5 opacity-100'}`}></span>
+                      <span className={`block h-0.5 w-5 bg-zinc-300 transition-all duration-300 origin-center ${mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''}`}></span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* ── Mobile dropdown menu ── */}
+                {mobileOpen && (
+                  <div className="mobile-menu md:hidden mt-3 rounded-2xl border border-zinc-800/80 bg-[#0e0e11]/95 backdrop-blur-xl overflow-hidden shadow-2xl shadow-black/60">
+                    <div className="p-3 space-y-1">
+                      {navLinks.map(l => (
+                        <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-800/60 transition-all group">
+                          <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 group-hover:scale-150 transition-transform" style={{background:'#06b6d4'}}></span>
+                          {l.label}
+                        </a>
+                      ))}
+                    </div>
+                    <div className="p-3 pt-0 flex gap-2 border-t border-zinc-800/60 mt-1">
+                      <button onClick={() => { onTriggerAuth(false); setMobileOpen(false); }} className="flex-1 py-2.5 rounded-xl text-sm font-medium text-zinc-300 border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-800 transition-colors">Sign In</button>
+                      <button onClick={() => { onTriggerAuth(true); setMobileOpen(false); }} className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white transition-all" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>Register</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </nav>
+          );
+        }
+
+        function LandingHero({ onTriggerAuth }) {
+          return (
+            <section className="relative flex flex-col items-center justify-center overflow-hidden bg-[#09090b] dot-grid" style={{paddingTop:'96px', paddingBottom:'48px'}}>
+              {/* Orb glows */}
+              <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="orb absolute top-[18%] left-[48%] -translate-x-1/2 w-[520px] h-[520px] rounded-full blur-[140px]" style={{background:'rgba(6,182,212,0.1)'}} />
+                <div className="orb2 absolute top-[30%] left-[20%] w-[280px] h-[280px] rounded-full blur-[100px]" style={{background:'rgba(16,185,129,0.07)'}} />
+                <div className="orb absolute bottom-[5%] right-[15%] w-[220px] h-[220px] rounded-full blur-[90px]" style={{background:'rgba(245,158,11,0.05)'}} />
+              </div>
+              <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+                <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full text-xs font-medium text-zinc-300 mb-7 glow-badge">
+                  <span className="h-2 w-2 rounded-full animate-pulse" style={{background:'#06b6d4'}} />
+                  <span>Next-Gen Legal-Tech Automation</span>
+                  <span className="text-zinc-500">✦</span>
+                </div>
+                <h1 className="hero-title text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-5 leading-tight">
+                  Intelligent Legal Review in <br />
+                  <span className="gradient-text">A Fraction of the Time</span>
+                </h1>
+                <p className="text-zinc-400 text-sm sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                  Upload vendor agreements, analyze compliance guidelines, and purge critical document risks instantly with an executive dashboard driven by localized AI intelligence.
+                </p>
+                <div className="flex justify-center gap-4 mb-10">
+                  <button onClick={() => onTriggerAuth(false)} className="cta-btn px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold rounded-xl transition-all flex items-center space-x-3 group text-sm sm:text-base" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>
+                    <span>Launch Platform Workspace</span>
+                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                  </button>
+                </div>
+                <div className="glow-divider max-w-3xl mx-auto mb-0" />
+                <div className="stats-grid grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto py-7 bg-zinc-950/10 backdrop-blur-sm">
+                  <div>
+                    <h3 className="shimmer-text text-2xl sm:text-3xl font-extrabold font-mono">10x</h3>
+                    <p className="text-zinc-500 text-[11px] uppercase tracking-wider mt-1">Faster Processing</p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold font-mono" style={{color:'#06b6d4'}}>99.4%</h3>
+                    <p className="text-zinc-500 text-[11px] uppercase tracking-wider mt-1">Risk Detection Accuracy</p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-mono">Zero</h3>
+                    <p className="text-zinc-500 text-[11px] uppercase tracking-wider mt-1">Manual Blindspots</p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold font-mono" style={{color:'#10b981'}}>24/7</h3>
+                    <p className="text-zinc-500 text-[11px] uppercase tracking-wider mt-1">Compliance Auditing</p>
+                  </div>
+                </div>
+                <div className="glow-divider max-w-3xl mx-auto mt-0" />
+              </div>
+            </section>
+          );
+        }
+
+        function LandingFeatures() {
+          const cards = [
+            { icon: "📥", title: "Instant Contract Ingestion", desc: "Drag and drop standard PDF, TXT, or DOCX legal documents to automatically scan and catalog files cleanly into your repository." },
+            { icon: "🔍", title: "Automated Risk Discovery", desc: "Instantly flags asymmetrical notice terms, hidden liability constraints, and data protection gaps within contracts." },
+            { icon: "💬", title: "Interactive Legal AI Chat", desc: "Chat natively with specialized models to break down confusing legal clauses or summarize lengthy master service agreements." },
+            { icon: "📊", title: "Live Compliance Metrics", desc: "Track total indexed data nodes, operational response scores, and audit success filters right from an executive dashboard layout." },
+            { icon: "🛡️", title: "Data Integrity & Validation", desc: "Guarantees zero corrupted contract entries or text loss through robust background data parsing controls." },
+            { icon: "⏰", title: "Audit Log History", desc: "Maintains clear security chronological records for all repository additions, modifications, and PURGES instantly." }
+          ];
+          return (
+            <section id="features" className="py-20 bg-[#09090b] relative z-10">
+              <div className="glow-divider" />
+              <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-20">
+                <div className="text-center max-w-2xl mx-auto mb-14">
+                  <span className="inline-block text-[10px] font-mono uppercase tracking-[0.2em] px-3 py-1 rounded-full mb-4 border" style={{color:'#06b6d4', background:'rgba(6,182,212,0.08)', borderColor:'rgba(6,182,212,0.2)'}}>Core Capabilities</span>
+                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">Product Core Capabilities</h2>
+                  <p className="text-zinc-400 text-sm leading-relaxed">Everything legal and enterprise operational teams need to protect compliance matrices safely.</p>
+                </div>
+                <div className="features-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+                  {cards.map((c, idx) => (
+                    <div key={idx} className="premium-card p-6 flex flex-col justify-between group" style={{minHeight:'160px'}}>
+                      <span className="feat-num">{String(idx+1).padStart(2,'0')}</span>
+                      <div>
+                        <div className="h-10 w-10 rounded-xl flex items-center justify-center text-lg mb-5 transition-all duration-300 group-hover:scale-110" style={{background:'rgba(6,182,212,0.1)', border:'1px solid rgba(6,182,212,0.2)'}}>{c.icon}</div>
+                        <h3 className="text-sm font-bold text-white mb-2 tracking-tight">{c.title}</h3>
+                        <p className="text-zinc-400 text-xs leading-relaxed">{c.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        }
+
+        function LandingWorkflow() {
+          return (
+            <section id="workflow" className="py-20 bg-[#0c0c0e] border-t border-zinc-900 relative z-10">
+              <div className="max-w-5xl mx-auto px-4 sm:px-6">
+                <div className="text-center max-w-2xl mx-auto mb-14">
+                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">The Contract Intelligence Workflow</h2>
+                  <p className="text-zinc-400 text-sm">Three basic steps to turn raw legal files into actionable insights.</p>
+                </div>
+                <div className="space-y-4">
+                  <div className="premium-card p-5 bg-zinc-900/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" style={{borderLeft:'2px solid #06b6d4'}}>
+                    <div className="max-w-xl">
+                      <span className="text-[10px] uppercase font-mono tracking-wider px-2 py-0.5 rounded border" style={{background:'rgba(6,182,212,0.1)', color:'#06b6d4', borderColor:'rgba(6,182,212,0.2)'}}>Step 01</span>
+                      <h4 className="text-sm font-bold text-white mt-2">Upload & Index</h4>
+                      <p className="text-zinc-400 text-xs mt-1">Drop documents directly into the responsive client drop-zone. The platform registers titles in milliseconds.</p>
+                    </div>
+                  </div>
+                  <div className="premium-card p-5 bg-zinc-900/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" style={{borderLeft:'2px solid #10b981'}}>
+                    <div className="max-w-xl">
+                      <span className="text-[10px] uppercase font-mono tracking-wider px-2 py-0.5 rounded border" style={{background:'rgba(16,185,129,0.1)', color:'#10b981', borderColor:'rgba(16,185,129,0.2)'}}>Step 02</span>
+                      <h4 className="text-sm font-bold text-white mt-2">Automated Extraction & Audit</h4>
+                      <p className="text-zinc-400 text-xs mt-1">Advanced background text-parsing models read through paragraphs, instantly isolating liability thresholds.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          );
+        }
+
+        function LandingTrustSecurity() {
+          const blocks = [
+            { icon: "🛡️", title: "Enterprise Isolated Vault", info: "SOC2 Standard", desc: "Uses segregated dynamic tenancy architecture bounds ensuring your contract repositories are completely siloed." },
+            { icon: "🔑", title: "End-to-End Cryptography", info: "AES-256 State", desc: "All system text variables, files, and chat logging pipelines remain completely encrypted at rest." },
+            { icon: "🚫", title: "Strict Privacy Commitment", desc: "Your sensitive files are never utilized for model public retraining tracks." }
+          ];
+          return (
+            <section id="security" className="py-20 bg-[#09090b] border-t border-zinc-900 relative z-10">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <div className="text-center max-w-2xl mx-auto mb-14">
+                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">Bank-Grade Privacy Protocols</h2>
+                  <p className="text-zinc-400 text-sm">LexiMind AI uses premium data fencing mechanisms to keep corporate metadata traces secure.</p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  {blocks.map((b, idx) => (
+                    <div key={idx} className="premium-card p-6 bg-zinc-950/30">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-2xl">{b.icon}</span>
+                        {b.info && <span className="text-[10px] font-mono px-2 py-0.5 rounded border" style={{background:'rgba(6,182,212,0.1)', color:'#06b6d4', borderColor:'rgba(6,182,212,0.2)'}}>{b.info}</span>}
+                      </div>
+                      <h3 className="text-white text-base font-bold mb-2">{b.title}</h3>
+                      <p className="text-zinc-400 text-xs">{b.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        }
+
+        // CHANGED: 3 pricing plans added
+        function LandingPricing() {
+          const plans = [
+            {
+              name: 'Starter',
+              price: '$49',
+              period: '/month',
+              desc: 'Perfect for small legal teams and solo practitioners.',
+              color: '#64748b',
+              features: ['Up to 50 documents/month', 'Basic risk detection', 'AI Chat (100 queries/mo)', '1 user seat', 'Email support'],
+              cta: 'Get Started',
+              popular: false,
+            },
+            {
+              name: 'Professional',
+              price: '$149',
+              period: '/month',
+              desc: 'For growing legal departments with advanced needs.',
+              color: '#06b6d4',
+              features: ['Up to 500 documents/month', 'Advanced risk discovery', 'AI Chat (unlimited)', 'Up to 10 user seats', 'Compliance dashboard', 'Priority support'],
+              cta: 'Start Free Trial',
+              popular: true,
+            },
+            {
+              name: 'Enterprise',
+              price: 'Custom',
+              period: '',
+              desc: 'Full-scale deployment for large organizations.',
+              color: '#10b981',
+              features: ['Unlimited documents', 'Full audit log history', 'Dedicated AI cluster', 'Unlimited user seats', 'SOC2 + AES-256 vault', 'Dedicated account manager'],
+              cta: 'Contact Sales',
+              popular: false,
+            }
+          ];
+
+          return (
+            <section id="pricing" className="py-20 bg-[#0c0c0e] border-t border-zinc-900 relative z-10">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <div className="text-center max-w-2xl mx-auto mb-14">
+                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">Flexible Pricing Matrix</h2>
+                  <p className="text-zinc-400 text-sm">Choose the plan that fits your team's legal review volume and compliance needs.</p>
+                </div>
+                <div className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                  {plans.map((plan, idx) => (
+                    <div key={idx} className={`premium-card p-7 flex flex-col gap-5 ${plan.popular ? 'pricing-popular' : ''}`} style={plan.popular ? {borderColor:'#06b6d4'} : {}}>
+                      {plan.popular && (
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full text-white" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>Most Popular</span>
+                        </div>
+                      )}
+                      <div>
+                        <h4 className="text-xs font-bold uppercase tracking-widest mb-2" style={{color: plan.color}}>{plan.name}</h4>
+                        <div className="flex items-end gap-1 mb-2">
+                          <span className="text-4xl font-extrabold text-white font-mono">{plan.price}</span>
+                          {plan.period && <span className="text-zinc-500 text-sm pb-1">{plan.period}</span>}
+                        </div>
+                        <p className="text-zinc-400 text-xs leading-relaxed">{plan.desc}</p>
+                      </div>
+                      <ul className="space-y-2.5 flex-1">
+                        {plan.features.map((f, i) => (
+                          <li key={i} className="flex items-start gap-2.5 text-xs text-zinc-300">
+                            <span className="mt-0.5 flex-shrink-0" style={{color: plan.color}}>
+                              <Icons.Check />
+                            </span>
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                      <button className="w-full py-2.5 rounded-lg text-xs font-semibold transition-all" style={plan.popular ? {background:'linear-gradient(135deg,#0891b2,#059669)', color:'white', boxShadow:'0 4px 20px rgba(6,182,212,0.25)'} : {background:'#18181b', color: plan.color, border:`1px solid ${plan.color}33`}}>
+                        {plan.cta}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        }
+
+        // ADDED: Full footer with links, social, etc.
+        function LandingFooter() {
+          const footerLinks = {
+            Product: ['Key Capabilities', 'How It Works', 'Pricing Matrix', 'Changelog'],
+            Legal: ['Privacy Policy', 'Terms of Service', 'Data Processing', 'Cookie Policy'],
+            Company: ['About Us', 'Careers', 'Blog', 'Contact'],
+            Support: ['Documentation', 'API Reference', 'Status Page', 'Help Center'],
+          };
+
+          return (
+            <footer className="site-footer">
+              <div className="glow-divider" />
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 mb-12">
+                  {/* Brand column */}
+                  <div className="col-span-2 sm:col-span-3 md:col-span-1">
+                    <div className="flex items-center space-x-2 mb-4">
+                      <div className="h-8 w-8 rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-lg shadow-cyan-900/30" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>L</div>
+                      <span className="text-base font-bold text-white">Lexi<span style={{color:'#06b6d4'}}>Mind</span></span>
+                    </div>
+                    <p className="text-zinc-500 text-xs leading-relaxed mb-5 max-w-xs">Enterprise-grade AI legal review platform. Secure, fast, and accurate contract intelligence for modern legal teams.</p>
+                    <div className="flex items-center gap-3">
+                      <a href="#" className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-cyan-400 hover:border-cyan-800/60 transition-all hover:shadow-sm hover:shadow-cyan-900/30"><Icons.Twitter /></a>
+                      <a href="#" className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-cyan-400 hover:border-cyan-800/60 transition-all hover:shadow-sm hover:shadow-cyan-900/30"><Icons.Linkedin /></a>
+                      <a href="#" className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-cyan-400 hover:border-cyan-800/60 transition-all hover:shadow-sm hover:shadow-cyan-900/30"><Icons.Github /></a>
+                    </div>
+                  </div>
+
+                  {/* Link columns */}
+                  {Object.entries(footerLinks).map(([cat, links]) => (
+                    <div key={cat}>
+                      <h5 className="text-[10px] font-bold text-zinc-300 uppercase tracking-[0.18em] mb-4">{cat}</h5>
+                      <ul className="space-y-2.5">
+                        {links.map(link => (
+                          <li key={link}>
+                            <a href="#" className="text-xs text-zinc-500 hover:text-zinc-200 transition-colors hover:translate-x-0.5 inline-block">{link}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom bar */}
+                <div className="border-t border-zinc-900/80 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <p className="text-xs text-zinc-600">© {new Date().getFullYear()} LexiMind AI Frameworks. All rights reserved.</p>
+                  <div className="flex items-center gap-3">
+                    <span className="flex items-center gap-1.5 text-[11px] text-emerald-500 bg-emerald-950/30 border border-emerald-900/30 px-2.5 py-1 rounded-full">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                      All systems operational
+                    </span>
+                    <span className="text-[11px] text-zinc-600 border border-zinc-800 px-2.5 py-1 rounded-full font-mono">SOC2 Certified</span>
+                  </div>
+                </div>
+              </div>
+            </footer>
+          );
+        }
+
+        function LandingPage({ onTriggerAuth }) {
+          return (
+            <div className="bg-[#09090b] min-h-screen text-zinc-200 scroll-smooth">
+              <LandingNavbar onTriggerAuth={onTriggerAuth} />
+              <LandingHero onTriggerAuth={onTriggerAuth} />
+              <LandingFeatures />
+              <LandingWorkflow />
+              <LandingTrustSecurity />
+              <LandingPricing />
+              <LandingFooter />
+            </div>
+          );
+        }
+
+        // ==========================================
+        // FIXED DASHBOARD SYSTEM ENGINE COMPONENT BLOCKS
+        // ==========================================
+        function Header({ activeUser, selectedModel, setSelectedModel, onToggleSidebar, onProfileClick, notifications, setNotifications, searchQuery, setSearchQuery }) {
           const [showNotifBox, setShowNotifBox] = React.useState(false);
           const hasUnread = notifications.some(n => !n.read);
+          const userInitials = activeUser.name ? activeUser.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'NK';
 
           return (
             <header className="h-16 border-b border-[#27272a] bg-[#121214]/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40 relative gap-4">
@@ -644,22 +1612,13 @@
                 <button onClick={onToggleSidebar} className="md:hidden text-zinc-400 hover:text-zinc-200 p-1 flex-shrink-0">
                   <Icons.Menu />
                 </button>
-                
-                {/* DYNAMIC RESPONSIVE FIXED SEARCH BAR AND ICON CONNECTIONS */}
                 <div className="relative w-full">
                   <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                     <Icons.Search className="h-3.5 w-3.5 text-zinc-500" />
                   </div>
-                  <input 
-                    type="text" 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search files..." 
-                    className="w-full bg-[#18181b] border border-[#27272a] rounded-lg pl-10 pr-4 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 transition-colors truncate" 
-                  />
+                  <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search files..." className="w-full bg-[#18181b] border border-[#27272a] rounded-lg pl-10 pr-4 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-cyan-500 transition-colors truncate" />
                 </div>
               </div>
-              
               <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0 ml-auto relative">
                 <div className="flex items-center gap-2 bg-[#18181b] border border-[#27272a] rounded-lg px-2 py-1">
                   <span className="text-[10px] text-zinc-500 font-medium hidden sm:inline">Model:</span>
@@ -668,28 +1627,25 @@
                     <option value="Gemini Flash" className="bg-[#121214]">Gemini Flash</option>
                   </select>
                 </div>
-                
                 <div className="hidden xs:flex items-center gap-2 bg-[#1c1c21] border border-zinc-800/80 rounded-full px-3 py-1">
                   <Icons.Cpu />
                   <span className="text-[11px] font-medium text-zinc-300 hidden sm:inline">Vertex AI</span>
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]"></span>
+                  <span className="inline-block w-1.5 h-1.5 rounded-full" style={{background:'#06b6d4'}}></span>
                 </div>
-
                 <div className="relative">
                   <button onClick={() => setShowNotifBox(!showNotifBox)} className="p-1.5 rounded-lg border border-zinc-800 bg-[#18181b] text-zinc-400 hover:text-zinc-200 relative transition-all">
                     <Icons.Bell />
-                    {hasUnread && <span className="absolute top-1 right-1 w-2 h-2 bg-indigo-500 rounded-full"></span>}
+                    {hasUnread && <span className="absolute top-1 right-1 w-2 h-2 rounded-full" style={{background:'#06b6d4'}}></span>}
                   </button>
-
                   {showNotifBox && (
                     <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-[#121214] border border-[#27272a] rounded-xl shadow-xl overflow-hidden z-50">
                       <div className="p-3 bg-[#161619] border-b border-[#27272a] flex justify-between items-center">
                         <span className="text-xs font-semibold text-zinc-200">Audit History Logs</span>
-                        <button onClick={() => { setNotifications(prev => prev.map(n => ({...n, read: true}))); setShowNotifBox(false); }} className="text-[10px] text-indigo-400 hover:underline">Mark all read</button>
+                        <button onClick={() => { setNotifications(prev => prev.map(n => ({...n, read: true}))); setShowNotifBox(false); }} className="text-[10px] hover:underline font-medium" style={{color:'#06b6d4'}}>Mark all read</button>
                       </div>
                       <div className="divide-y divide-zinc-800 max-h-64 overflow-y-auto">
                         {notifications.map(n => (
-                          <div key={n.id} className={`p-3 text-[11px] transition-colors ${n.read ? 'bg-transparent text-zinc-400' : 'bg-indigo-500/5 text-zinc-200'}`}>
+                          <div key={n.id} className={`p-3 text-[11px] transition-colors ${n.read ? 'bg-transparent text-zinc-400' : 'text-zinc-200'}`} style={!n.read ? {background:'rgba(6,182,212,0.03)'} : {}}>
                             <div className="flex justify-between items-start mb-0.5">
                               <span className={`font-medium ${n.type === 'delete' ? 'text-rose-400' : 'text-zinc-300'}`}>
                                 {n.type === 'create' ? '📥 File Created' : '🗑️ File Removed'}
@@ -703,17 +1659,15 @@
                     </div>
                   )}
                 </div>
-
-                <div onClick={onProfileClick} className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-semibold text-xs text-white border border-zinc-700 cursor-pointer hover:scale-105 transition-transform flex-shrink-0">
-                  NK
+                <div onClick={onProfileClick} className="w-8 h-8 rounded-full flex items-center justify-center font-semibold text-xs text-white border border-zinc-700 cursor-pointer hover:scale-105 transition-transform flex-shrink-0" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>
+                  {userInitials}
                 </div>
               </div>
             </header>
           );
         }
 
-        // 2. LEFT SIDEBAR COMPONENT
-        function Sidebar({ activeTab, setActiveTab, docCount, isMobileOpen, setIsMobileOpen, onProfileClick }) {
+        function Sidebar({ activeUser, activeTab, setActiveTab, docCount, isMobileOpen, setIsMobileOpen, onProfileClick, onBackToLanding }) {
           const menuItems = [
             { name: 'Dashboard', icon: Icons.Layers },
             { name: 'Documents', icon: Icons.FileText, count: docCount },
@@ -721,39 +1675,39 @@
             { name: 'Analytics', icon: Icons.BarChart2 },
             { name: 'Settings', icon: Icons.Settings },
           ];
+          const userInitials = activeUser.name ? activeUser.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'NK';
+
           return (
             <React.Fragment>
               {isMobileOpen && <div onClick={() => setIsMobileOpen(false)} className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40 md:hidden" />}
               <aside className={`w-64 bg-[#121214] border-r border-[#27272a] flex flex-col justify-between fixed md:sticky top-0 h-screen z-50 transition-transform duration-300 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
                 <div>
-                  <div className="h-16 flex items-center justify-between px-6 border-b border-[#27272a]">
-                    <div className="flex items-center gap-2.5">
-                      <div className="bg-gradient-to-tr from-indigo-500 to-violet-500 p-2 rounded-xl shadow-lg">
+                  <div className="h-16 flex items-center gap-2 px-4 border-b border-[#27272a]">
+                    <button onClick={onBackToLanding} className="text-[10px] font-bold font-mono border border-zinc-800 bg-zinc-900/80 text-zinc-400 hover:text-white px-2.5 py-1 rounded transition-colors flex-shrink-0">← Back</button>
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="p-2 rounded-xl shadow-lg flex-shrink-0" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>
                         <Icons.Sparkles className="w-4 h-4 text-white" />
                       </div>
-                      <div>
-                        <span className="font-semibold tracking-tight text-xs block text-zinc-100">LexiMind AI</span>
-                        <span className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase block">Enterprise Legal</span>
+                      <div className="min-w-0 truncate">
+                        <span className="font-semibold tracking-tight text-xs block text-zinc-100 truncate">LexiMind AI</span>
+                        <span className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase block truncate">Enterprise Legal</span>
                       </div>
                     </div>
-                    <button onClick={() => setIsMobileOpen(false)} className="md:hidden text-zinc-500 text-sm p-1.5">✕</button>
                   </div>
                   <nav className="p-4 space-y-1.5">
                     {menuItems.map((item) => {
                       const Icon = item.icon;
                       const isActive = activeTab === item.name;
                       return (
-                        <button key={item.name} 
-                          onClick={() => { setActiveTab(item.name); setIsMobileOpen(false); }}
-                          className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all group ${
-                            isActive ? 'bg-[#1e1e22] text-indigo-400 border border-zinc-800/80 shadow-sm' : 'text-zinc-400 hover:bg-[#18181b] hover:text-zinc-200'
-                          }`}>
+                        <button key={item.name} onClick={() => { setActiveTab(item.name); setIsMobileOpen(false); }}
+                          className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all group ${isActive ? 'bg-[#1e1e22] border border-zinc-800/80 shadow-sm' : 'text-zinc-400 hover:bg-[#18181b] hover:text-zinc-200'}`}
+                          style={isActive ? {color:'#06b6d4'} : {}}>
                           <div className="flex items-center gap-3">
                             <Icon />
                             <span>{item.name}</span>
                           </div>
                           {item.count !== undefined && (
-                            <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${isActive ? 'bg-indigo-500/10 text-indigo-400' : 'bg-zinc-800 text-zinc-500'}`}>
+                            <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${isActive ? 'text-cyan-400' : 'bg-zinc-800 text-zinc-500'}`} style={isActive ? {background:'rgba(6,182,212,0.1)'} : {}}>
                               {item.count}
                             </span>
                           )}
@@ -762,20 +1716,18 @@
                     })}
                   </nav>
                 </div>
-                
                 <div onClick={onProfileClick} className="p-4 border-t border-[#27272a] space-y-3 bg-[#161619] cursor-pointer hover:bg-zinc-900/60 transition-colors group">
                   <div className="flex items-center justify-between text-[10px] bg-emerald-950/20 border border-emerald-900/30 rounded-lg p-2 text-emerald-400">
-                    <div className="flex items-center gap-2">
-                      <Icons.ShieldCheck />
-                      <span>Secure OAuth Active</span>
-                    </div>
+                    <div className="flex items-center gap-2"><Icons.ShieldCheck /><span>Secure OAuth Active</span></div>
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                   </div>
                   <div className="flex items-center gap-3 p-1">
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-semibold text-[11px] text-white group-hover:scale-105 transition-transform">NK</div>
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center font-semibold text-[11px] text-white" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>
+                      {userInitials}
+                    </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium text-zinc-200 truncate group-hover:text-indigo-400 transition-colors">Navin Kukreja</p>
-                      <p className="text-[10px] text-zinc-500 truncate">Senior Counsel</p>
+                      <p className="text-xs font-medium text-zinc-200 truncate group-hover:transition-colors" style={{}}>{activeUser.name}</p>
+                      <p className="text-[10px] text-zinc-500 truncate">{activeUser.role}</p>
                     </div>
                   </div>
                 </div>
@@ -784,13 +1736,12 @@
           );
         }
 
-        // 3. KPI METRICS BLOCK COMPONENT
         function MetricsGrid() {
           const kpis = [
-            { title: 'Documents Processed', value: '1,248', change: '+12% this week', color: 'text-indigo-400', icon: Icons.FileText },
-            { title: 'Avg Response Time', value: '1.4s', change: 'Gemini Cluster', color: 'text-cyan-400', icon: Icons.Clock },
-            { title: 'AI Accuracy Score', value: '99.4%', change: 'Human-in-loop verification', color: 'text-emerald-400', icon: Icons.CheckCircle2 },
-            { title: 'Active Legal Users', value: '42', change: 'Live nodes active', color: 'text-purple-400', icon: Icons.Database },
+            { title: 'Documents Processed', value: '1,248', change: '+12% this week', color: '#06b6d4', icon: Icons.FileText },
+            { title: 'Avg Response Time', value: '1.4s', change: 'Gemini Cluster', color: '#22d3ee', icon: Icons.Clock },
+            { title: 'AI Accuracy Score', value: '99.4%', change: 'Human-in-loop verification', color: '#10b981', icon: Icons.CheckCircle2 },
+            { title: 'Active Legal Users', value: '42', change: 'Live nodes active', color: '#a78bfa', icon: Icons.Database },
           ];
           return (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
@@ -800,7 +1751,7 @@
                   <div key={kpi.title} className="bg-[#121214] border border-[#27272a] p-4 rounded-xl shadow-sm">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">{kpi.title}</span>
-                      <Icon className={kpi.color} />
+                      <span style={{color: kpi.color}}><Icon className="w-4 h-4" /></span>
                     </div>
                     <div className="flex items-baseline gap-1.5">
                       <span className="text-xl font-semibold text-zinc-100 font-mono">{kpi.value}</span>
@@ -813,22 +1764,13 @@
           );
         }
 
-        // 4. WORKFLOW DOCUMENT INTERFACE WITH EMBEDDED DYNAMIC SEARCH FILTERS
         function DocumentWorkbench({ documents, onUploadStart, isUploading, uploadProgress, currentUploadingName, onDeleteDoc, searchQuery }) {
           const fileInputRef = React.useRef(null);
-
           const processFile = (file) => {
             if (!file) return;
-            onUploadStart({
-              name: file.name,
-              size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-              date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-            });
+            onUploadStart({ name: file.name, size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`, date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) });
           };
-
-          const filteredDocs = documents.filter(doc => 
-            doc.name.toLowerCase().includes(searchQuery.toLowerCase())
-          );
+          const filteredDocs = documents.filter(doc => doc.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
           return (
             <div className="space-y-4 w-full">
@@ -837,68 +1779,53 @@
                   <h3 className="text-xs font-semibold text-zinc-200">Ingest New Contracts</h3>
                   <p className="text-[11px] text-zinc-500">Upload agreements to index them into the Vertex AI Vector DB cluster.</p>
                 </div>
-
                 <input type="file" ref={fileInputRef} className="hidden" accept=".pdf,.txt,.doc,.docx" onChange={(e) => processFile(e.target.files[0])} />
-
-                <div 
-                  onClick={() => fileInputRef.current.click()}
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => { e.preventDefault(); processFile(e.dataTransfer.files[0]); }}
-                  className="border border-dashed border-zinc-800 hover:border-indigo-500/50 bg-[#161619]/40 rounded-xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all group text-center"
-                >
+                <div onClick={() => fileInputRef.current.click()} onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); processFile(e.dataTransfer.files[0]); }}
+                  className="border border-dashed border-zinc-800 hover:border-cyan-500/50 bg-[#161619]/40 rounded-xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all text-center">
                   <Icons.UploadCloud />
-                  <p className="text-xs text-zinc-300 font-medium group-hover:text-indigo-400 transition-colors">Drag & drop local files here, or click to browse</p>
+                  <p className="text-xs text-zinc-300 font-medium hover:text-cyan-400 transition-colors">Drag & drop local files here, or click to browse</p>
                   <p className="text-[10px] text-zinc-500">Supports PDF, TXT, DOCX. Live OCR parsing active.</p>
                 </div>
-
                 {isUploading && (
                   <div className="bg-[#18181b] border border-zinc-800/60 rounded-lg p-3">
                     <div className="flex items-center justify-between text-[11px] mb-1.5">
                       <div className="flex items-center gap-2 text-zinc-300 min-w-0">
-                        <Icons.RefreshCw className="text-indigo-400 animate-spin w-3 h-3 flex-shrink-0" />
+                        <Icons.RefreshCw className="animate-spin w-3 h-3 flex-shrink-0" style={{color:'#06b6d4'}} />
                         <span className="font-medium truncate">{currentUploadingName}</span>
                       </div>
                       <span className="text-zinc-400 font-mono ml-2">{uploadProgress}%</span>
                     </div>
                     <div className="w-full bg-zinc-900 h-1 rounded-full overflow-hidden">
-                      <div className="bg-indigo-500 h-full rounded-full transition-all duration-150" style={{ width: `${uploadProgress}%` }}></div>
+                      <div className="h-full rounded-full transition-all duration-150" style={{ width: `${uploadProgress}%`, background:'linear-gradient(90deg,#0891b2,#059669)' }}></div>
                     </div>
                   </div>
                 )}
               </div>
-
               <div className="bg-[#121214] border border-[#27272a] rounded-xl overflow-hidden shadow-sm w-full">
                 <div className="p-4 border-b border-[#27272a] flex items-center justify-between flex-wrap gap-2">
                   <h3 className="text-xs font-semibold text-zinc-200">Active Document Repository</h3>
-                  {searchQuery && (
-                    <span className="text-[10px] bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded text-indigo-400 font-mono truncate max-w-[180px]">
-                      Filtering: "{searchQuery}"
-                    </span>
-                  )}
+                  {searchQuery && <span className="text-[10px] px-2 py-0.5 rounded font-mono truncate" style={{background:'rgba(6,182,212,0.1)', color:'#06b6d4', border:'1px solid rgba(6,182,212,0.2)'}}>Filtering: "{searchQuery}"</span>}
                 </div>
-                
                 <div className="divide-y divide-[#27272a] overflow-x-auto w-full">
                   {filteredDocs.length > 0 ? (
                     filteredDocs.map((doc) => (
                       <div key={doc.id} className="p-3.5 flex items-center justify-between hover:bg-[#161619]/60 transition-colors group min-w-[280px]">
                         <div className="flex items-center gap-3 min-w-0">
-                          <div className="flex-shrink-0"><Icons.FileText /></div>
+                          <Icons.FileText />
                           <div className="min-w-0">
-                            <p className="text-xs font-medium text-zinc-200 truncate pr-2 max-w-[180px] sm:max-w-xs md:max-w-sm lg:max-w-md">{doc.name}</p>
+                            <p className="text-xs font-medium text-zinc-200 truncate max-w-[180px] sm:max-w-xs">{doc.name}</p>
                             <p className="text-[10px] text-zinc-500">{doc.size} • {doc.date}</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0 ml-2">
+                        <div className="flex items-center gap-2 flex-shrink-0 ml-2">
                           {doc.status === 'Indexed' && <span className="text-[10px] bg-emerald-950/30 text-emerald-400 border border-emerald-900/40 px-2 py-0.5 rounded-md font-medium">Indexed</span>}
                           {doc.status === 'Failed' && <span className="text-[10px] bg-rose-950/30 text-rose-400 border border-rose-900/40 px-2 py-0.5 rounded-md font-medium">Failed</span>}
-                          <button onClick={() => onDeleteDoc(doc.id, doc.name)} className="text-zinc-600 hover:text-rose-400 text-xs px-2 transition-colors opacity-100 sm:opacity-0 group-hover:opacity-100">✕</button>
+                          <button onClick={() => onDeleteDoc(doc.id, doc.name)} className="text-zinc-600 hover:text-rose-400 text-xs px-2 transition-colors">✕</button>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <div className="p-8 text-center text-zinc-500 text-xs italic">
-                      No matching files indexed in the active vector space.
-                    </div>
+                    <div className="p-8 text-center text-zinc-500 text-xs italic">No matching files indexed in the active vector space.</div>
                   )}
                 </div>
               </div>
@@ -906,63 +1833,22 @@
           );
         }
 
-        // 5. GEMINI DYNAMIC CHAT PANEL INTERFACE
         function ChatPanel({ selectedModel, isStandalone }) {
           const [messages, setMessages] = React.useState([
             { sender: 'user', text: 'What are the key risks in this contract?', time: '1:52 PM' },
-            { sender: 'ai', text: 'Based on my analysis of the uploaded Master Services Agreement via the Vertex AI pipeline, I have identified the following critical legal risks:', 
-              bullets: [
-                'Termination clause requires an asymmetrical 90-day notice.',
-                'Vendor liability cap is undefined and open to uncapped damages.',
-                'No explicit data retention limitation found post contract termination.',
-                'Missing standard confidentiality duration survival terms.'
-              ], time: '1:52 PM' }
+            { sender: 'ai', text: 'Based on my analysis of the uploaded Master Services Agreement via the Vertex AI pipeline, I have identified the following critical legal risks:', bullets: ['Termination clause requires an asymmetrical 90-day notice.', 'Vendor liability cap is undefined and open to uncapped damages.', 'No explicit data retention limitation found post contract termination.'], time: '1:52 PM' }
           ]);
           const [inputMessage, setInputMessage] = React.useState('');
           const [isTyping, setIsTyping] = React.useState(false);
-
-          const suggestedPrompts = [
-            { label: 'Summarize Contract', text: 'Can you summarize this contract?' },
-            { label: 'Find Termination Clauses', text: 'Find termination clauses' },
-            { label: 'Highlight Payments', text: 'Highlight payment obligations' },
-            { label: 'List Compliance Risks', text: 'List compliance risks' }
-          ];
 
           const handleSend = (userText) => {
             if (!userText.trim()) return;
             setMessages(prev => [...prev, { sender: 'user', text: userText, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]);
             setInputMessage('');
             setIsTyping(true);
-
             setTimeout(() => {
               setIsTyping(false);
-              const cleanText = userText.toLowerCase();
-              let aiReply = { sender: 'ai', text: '', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) };
-
-              if (cleanText.includes('summary') || cleanText.includes('summarize')) {
-                aiReply.text = `Here is the executive summary generated by ${selectedModel}:`;
-                aiReply.bullets = [
-                  'Agreement Type: Master Services Framework.',
-                  'Scope: Enterprise software deployments and integration mapping.',
-                  'Ownership: Complete infrastructure core remains vendor intellectual property.'
-                ];
-              } else if (cleanText.includes('termination') || cleanText.includes('clause')) {
-                aiReply.text = `Analysis of termination frameworks under active context:`;
-                aiReply.bullets = [
-                  'Section 14.2: Termination is permissible via 90-day explicit written notices.',
-                  'Breach Window: Standard 30-day structural remediation windows apply.'
-                ];
-              } else if (cleanText.includes('compliance') || cleanText.includes('risk')) {
-                aiReply.text = `Compliance auditing vectors identified:`;
-                aiReply.bullets = [
-                  'Data Laws: Cross-border metadata handling bounds are ambiguously logged.',
-                  'Audit Frequency: Bound strictly to single-annual inspections.'
-                ];
-              } else {
-                aiReply.text = `Query processed using ${selectedModel}. The syntax balances commercially viable enterprise templates with no critical risk parameters observed for this block.`;
-              }
-
-              setMessages(prev => [...prev, aiReply]);
+              setMessages(prev => [...prev, { sender: 'ai', text: `Query processed using ${selectedModel}. Node parameters verified completely.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]);
             }, 1100);
           };
 
@@ -970,22 +1856,20 @@
             <div className={`bg-[#121214] border border-[#27272a] rounded-xl flex flex-col overflow-hidden shadow-sm w-full ${isStandalone ? 'h-[calc(100vh-11rem)]' : 'h-[500px] xl:h-[calc(100vh-15.5rem)]'}`}>
               <div className="p-4 border-b border-[#27272a] bg-[#161619] flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                  <span className="inline-block w-1.5 h-1.5 rounded-full animate-pulse" style={{background:'#06b6d4'}}></span>
                   <span className="text-xs font-semibold text-zinc-200">Gemini Review Engine</span>
                 </div>
-                <span className="text-[10px] text-indigo-400 font-mono bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">{selectedModel}</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded border" style={{color:'#06b6d4', background:'rgba(6,182,212,0.1)', borderColor:'rgba(6,182,212,0.2)'}}>{selectedModel}</span>
               </div>
-              
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.map((msg, i) => (
                   <div key={i} className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
-                    <div className={`text-xs p-3.5 rounded-xl max-w-[90%] border ${
-                      msg.sender === 'user' ? 'bg-indigo-600 border-indigo-500 text-white rounded-br-none' : 'bg-[#18181b] border-zinc-800 text-zinc-200 rounded-bl-none'
-                    }`}>
+                    <div className={`text-xs p-3.5 rounded-xl max-w-[90%] border ${msg.sender === 'user' ? 'text-white rounded-br-none' : 'bg-[#18181b] border-zinc-800 text-zinc-200 rounded-bl-none'}`}
+                      style={msg.sender === 'user' ? {background:'linear-gradient(135deg,#0891b2,#059669)', borderColor:'#0891b2'} : {}}>
                       <p className="leading-relaxed">{msg.text}</p>
                       {msg.bullets && (
                         <ul className="mt-2.5 space-y-1.5 list-disc pl-4 text-zinc-300 border-t border-zinc-800/80 pt-2">
-                          {msg.bullets.map((b, idx) => <li key={idx} className="marker:text-indigo-400">{b}</li>)}
+                          {msg.bullets.map((b, idx) => <li key={idx} style={{markerColor:'#06b6d4'}}>{b}</li>)}
                         </ul>
                       )}
                     </div>
@@ -993,29 +1877,15 @@
                 ))}
                 {isTyping && (
                   <div className="flex items-center gap-2 text-[10px] text-zinc-500 bg-zinc-900/40 px-3 py-2 border border-zinc-800 rounded-lg w-max animate-pulse">
-                    <Icons.RefreshCw className="animate-spin text-indigo-400 w-3 h-3" />
+                    <Icons.RefreshCw className="animate-spin w-3 h-3" style={{color:'#06b6d4'}} />
                     <span>Gemini processing token sequences...</span>
                   </div>
                 )}
               </div>
-
-              <div className="p-2 bg-[#141417] border-t border-[#27272a] flex gap-2 overflow-x-auto no-scrollbar">
-                {suggestedPrompts.map((p) => (
-                  <button key={p.label} onClick={() => handleSend(p.text)}
-                    className="text-[10px] font-medium text-zinc-400 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:text-zinc-200 px-2.5 py-1.5 rounded-lg whitespace-nowrap transition-colors flex items-center gap-1">
-                    {p.label} <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                  </button>
-                ))}
-              </div>
-
               <div className="p-3 bg-[#161619] border-t border-[#27272a] flex gap-2 items-center mt-auto">
                 <button className="text-zinc-500 hover:text-zinc-300 px-1"><Icons.Paperclip /></button>
-                <input type="text" value={inputMessage} 
-                  onChange={(e) => setInputMessage(e.target.value)} 
-                  onKeyDown={(e) => e.key === 'Enter' && handleSend(inputMessage)}
-                  placeholder="Ask Gemini to extract clauses or map liabilities..." 
-                  className="w-full bg-[#1c1c1f] text-xs text-zinc-200 p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-indigo-500" />
-                <button onClick={() => handleSend(inputMessage)} className="bg-indigo-600 hover:bg-indigo-500 text-white p-2.5 rounded-lg text-xs font-medium transition-all shadow-md"><Icons.Send /></button>
+                <input type="text" value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSend(inputMessage)} placeholder="Ask Gemini to extract clauses..." className="w-full bg-[#1c1c1f] text-xs text-zinc-200 p-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-cyan-500" />
+                <button onClick={() => handleSend(inputMessage)} className="text-white p-2.5 rounded-lg text-xs font-medium transition-all shadow-md" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}><Icons.Send /></button>
               </div>
             </div>
           );
@@ -1028,9 +1898,9 @@
                 <h3 className="text-sm font-semibold text-zinc-200">System Performance Telemetry</h3>
                 <p className="text-xs text-zinc-500">Live operational monitoring of your deployed Vertex AI container models.</p>
               </div>
-              <div className="h-48 border border-zinc-800 bg-zinc-900/30 rounded-xl flex items-end p-4 gap-2 sm:gap-3 justify-around">
+              <div className="h-48 border border-zinc-800 bg-zinc-900/30 rounded-xl flex items-end p-4 gap-2 justify-around">
                 {[45, 60, 32, 75, 90, 65, 85, 50, 95, 70].map((h, i) => (
-                  <div key={i} className="w-full bg-gradient-to-t from-indigo-600 to-violet-500 rounded-t animate-pulse" style={{ height: `${h}%`, animationDelay: `${i*100}ms` }}></div>
+                  <div key={i} className="w-full rounded-t" style={{ height: `${h}%`, background:`linear-gradient(to top, #0891b2, #059669)` }}></div>
                 ))}
               </div>
             </div>
@@ -1046,9 +1916,7 @@
               </div>
               <div className="space-y-4 divide-y divide-zinc-800/60">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2">
-                  <div>
-                    <label className="text-xs font-medium text-zinc-300 block">Default LLM Orchestrator</label>
-                  </div>
+                  <label className="text-xs font-medium text-zinc-300 block">Default LLM Orchestrator</label>
                   <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="bg-zinc-900 border border-zinc-800 text-xs rounded-lg p-2 text-zinc-300 w-full sm:w-auto">
                     <option value="Gemini 1.5 Pro">Gemini 1.5 Pro</option>
                     <option value="Gemini Flash">Gemini Flash</option>
@@ -1059,36 +1927,45 @@
           );
         }
 
-        // 6. MAIN APP MAIN MANAGER BLOCK
+        // ==========================================
+        // MAIN ROUTER ORCHESTRATOR
+        // ==========================================
         function App() {
+          const [viewMode, setViewMode] = React.useState('landing');
+          const [isAuthOpen, setIsAuthOpen] = React.useState(false);
+          const [registeredUsers, setRegisteredUsers] = React.useState([{ name: 'Navin Kukreja', email: 'counsel@leximind.ai', password: 'password123', role: 'Senior Legal Counsel' }]);
+          const [user, setUser] = React.useState({ name: 'Navin Kukreja', email: 'counsel@leximind.ai', role: 'Senior Legal Counsel' });
           const [activeTab, setActiveTab] = React.useState('Dashboard');
-          const [selectedModel, setSelectedModel] = React.useState('Gemini 1.5 Pro');
+          const [selectedModel, setSelectedModel] = React.useState('Gemini 1. Pro');
           const [isMobileSidebarOpen, setIsMobileSidebarOpen] = React.useState(false);
           const [showProfileModal, setShowProfileModal] = React.useState(false);
-          
           const [searchQuery, setSearchQuery] = React.useState('');
-          
           const [isUploading, setIsUploading] = React.useState(false);
           const [uploadProgress, setUploadProgress] = React.useState(0);
           const [currentUploadingName, setCurrentUploadingName] = React.useState('');
-          
           const [notifications, setNotifications] = React.useState([
-            { id: 1, text: "Navin Kukreja initialized secure context mapping.", time: "10 mins ago", type: "create", read: false },
+            { id: 1, text: "System initialized context credentials mapping.", time: "10 mins ago", type: "create", read: false },
             { id: 2, text: "Data_Processing_Addendum_v4.pdf text layers parsed.", time: "1 hr ago", type: "create", read: true }
           ]);
-          
           const [documents, setDocuments] = React.useState([
             { id: 1, name: 'MSLA_Vendor_Agreement_2026.pdf', size: '2.4 MB', date: 'May 24, 2026', status: 'Indexed' },
             { id: 2, name: 'Data_Processing_Addendum_v4.pdf', size: '1.1 MB', date: 'May 25, 2026', status: 'Indexed' },
             { id: 3, name: 'NDA_Executive_Search_Draft.pdf', size: '420 KB', date: 'May 26, 2026', status: 'Failed' },
           ]);
 
+          const handleNewAuthTrigger = (signUpRequested) => {
+            setIsAuthOpen(true);
+            setTimeout(() => { window.dispatchEvent(new CustomEvent('openAuthModal', { detail: { signUp: signUpRequested } })); }, 50);
+          };
+
+          const handleRegisterUser = (newUserData) => { setRegisteredUsers(prev => [...prev, newUserData]); };
+          const handleAuthSuccess = (userData) => { setUser(userData); setViewMode('app'); };
+
           const handleNewUpload = (meta) => {
             if (isUploading) return;
             setCurrentUploadingName(meta.name);
             setIsUploading(true);
             setUploadProgress(0);
-
             const interval = setInterval(() => {
               setUploadProgress((oldProgress) => {
                 if (oldProgress >= 100) {
@@ -1108,63 +1985,53 @@
             setNotifications(prev => [{ id: Date.now(), text: `${name} deleted from indexes.`, time: "Just Now", type: "delete", read: false }, ...prev]);
           };
 
+          if (viewMode === 'landing') {
+            return (
+              <React.Fragment>
+                <LandingPage onTriggerAuth={handleNewAuthTrigger} />
+                <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} onAuthSuccess={handleAuthSuccess} registeredUsers={registeredUsers} onRegisterUser={handleRegisterUser} />
+              </React.Fragment>
+            );
+          }
+
           return (
             <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex overflow-hidden w-full relative">
-              <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} docCount={documents.length} isMobileOpen={isMobileSidebarOpen} setIsMobileOpen={setIsMobileSidebarOpen} onProfileClick={() => setShowProfileModal(true)} />
-              
+              <Sidebar activeUser={user} activeTab={activeTab} setActiveTab={setActiveTab} docCount={documents.length} isMobileOpen={isMobileSidebarOpen} setIsMobileOpen={setIsMobileSidebarOpen} onProfileClick={() => setShowProfileModal(true)} onBackToLanding={() => setViewMode('landing')} />
               <div className="flex-1 flex flex-col min-w-0 overflow-hidden h-screen">
-                <Header selectedModel={selectedModel} setSelectedModel={setSelectedModel} onToggleSidebar={() => setIsMobileSidebarOpen(true)} onProfileClick={() => setShowProfileModal(true)} notifications={notifications} setNotifications={setNotifications} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-                
+                <Header activeUser={user} selectedModel={selectedModel} setSelectedModel={setSelectedModel} onToggleSidebar={() => setIsMobileSidebarOpen(true)} onProfileClick={() => setShowProfileModal(true)} notifications={notifications} setNotifications={setNotifications} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
                 <main className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6 w-full">
                   {activeTab === 'Dashboard' && (
                     <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start w-full">
                       <div className="xl:col-span-12 w-full"><MetricsGrid /></div>
-                      <div className="xl:col-span-7 w-full">
-                        <DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} searchQuery={searchQuery} />
-                      </div>
-                      <div className="xl:col-span-5 space-y-4 w-full">
-                        <ChatPanel selectedModel={selectedModel} isStandalone={false} />
-                      </div>
+                      <div className="xl:col-span-7 w-full"><DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} searchQuery={searchQuery} /></div>
+                      <div className="xl:col-span-5 space-y-4 w-full"><ChatPanel selectedModel={selectedModel} isStandalone={false} /></div>
                     </div>
                   )}
-
-                  {activeTab === 'Documents' && (
-                    <div className="max-w-4xl mx-auto w-full">
-                      <DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} searchQuery={searchQuery} />
-                    </div>
-                  )}
-
-                  {activeTab === 'AI Chat' && (
-                    <div className="max-w-4xl mx-auto w-full"><ChatPanel selectedModel={selectedModel} isStandalone={true} /></div>
-                  )}
-
-                  {activeTab === 'Analytics' && (
-                    <div className="max-w-4xl mx-auto space-y-6 w-full"><MetricsGrid /><AnalyticsView /></div>
-                  )}
-
-                  {activeTab === 'Settings' && (
-                    <div className="max-w-2xl mx-auto w-full"><SettingsView selectedModel={selectedModel} setSelectedModel={setSelectedModel} /></div>
-                  )}
+                  {activeTab === 'Documents' && (<div className="max-w-4xl mx-auto w-full"><DocumentWorkbench documents={documents} onUploadStart={handleNewUpload} isUploading={isUploading} uploadProgress={uploadProgress} currentUploadingName={currentUploadingName} onDeleteDoc={handleDeleteDocument} searchQuery={searchQuery} /></div>)}
+                  {activeTab === 'AI Chat' && (<div className="max-w-4xl mx-auto w-full"><ChatPanel selectedModel={selectedModel} isStandalone={true} /></div>)}
+                  {activeTab === 'Analytics' && (<div className="max-w-4xl mx-auto space-y-6 w-full"><MetricsGrid /><AnalyticsView /></div>)}
+                  {activeTab === 'Settings' && (<div className="max-w-2xl mx-auto w-full"><SettingsView selectedModel={selectedModel} setSelectedModel={setSelectedModel} /></div>)}
                 </main>
               </div>
 
-              {/* MODAL CONFIG */}
               {showProfileModal && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
                   <div className="bg-[#121214] border border-[#27272a] rounded-xl max-w-sm w-full p-6 space-y-4 relative">
-                    <button onClick={() => setShowProfileModal(false)} className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-300">✕</button>
+                    <button onClick={() => setShowProfileModal(false)} className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-300 transition-colors">✕</button>
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center font-bold text-sm text-white">NK</div>
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm text-white" style={{background:'linear-gradient(135deg,#0891b2,#059669)'}}>
+                        {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                      </div>
                       <div>
-                        <h4 className="font-semibold text-zinc-100 text-sm">Navin Kukreja</h4>
-                        <p className="text-xs text-zinc-500">Senior Legal Counsel</p>
+                        <h4 className="font-semibold text-zinc-100 text-sm">{user.name}</h4>
+                        <p className="text-xs text-zinc-500">{user.role}</p>
                       </div>
                     </div>
                     <div className="bg-zinc-900/60 rounded-lg p-3 border border-zinc-800 text-[11px] font-mono space-y-1.5 text-zinc-400">
-                      <div><span className="text-zinc-500">Security Access:</span> Tier-1 Legal Counsel</div>
-                      <div><span className="text-zinc-500">Active API Session:</span> live_tok_48227a</div>
+                      <div><span className="text-zinc-500">Authorized Node:</span> {user.email}</div>
+                      <div><span className="text-zinc-500">Security Access:</span> Tier-1 Dynamic Session</div>
                     </div>
-                    <button onClick={() => setShowProfileModal(false)} className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-lg text-xs font-medium transition-colors">Close Profile Panel</button>
+                    <button onClick={() => { setViewMode('landing'); setShowProfileModal(false); }} className="w-full bg-rose-950/40 hover:bg-rose-900/30 border border-rose-900/40 text-rose-400 py-2.5 rounded-lg text-xs font-semibold transition-colors">Sign Out</button>
                   </div>
                 </div>
               )}
