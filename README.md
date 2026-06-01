@@ -66,24 +66,24 @@ The platform follows a layered, service-oriented architecture optimized for docu
 
 ```mermaid
 flowchart TD
-    A["👥 Legal Users / Clients\nBrowser · Desktop · Third-party Integrations"]
+    A[" Legal Users / Clients\nBrowser · Desktop · Third-party Integrations"]
 
     subgraph FE["Frontend Layer"]
-        B["⚛️ React.js Frontend\nBabel · Tailwind CSS · React Router · Recharts"]
+        B[" React.js Frontend\nBabel · Tailwind CSS · React Router · Recharts"]
     end
 
     subgraph BE["Backend Layer"]
-        C["⚡ FastAPI Backend\nPython · Uvicorn · Pydantic · JWT Auth · BCrypt · CORS"]
-        D[("🗄️ PostgreSQL\nSQLAlchemy ORM\nMigrations")]
-        E["🤖 AI Risk Discovery\nClause NLP · Risk Scoring\nObligation Extraction"]
-        F["☁️ Google Cloud\nCloud Run · Cloud Armor\nSecret Manager"]
+        C[" FastAPI Backend\nPython · Uvicorn · Pydantic · JWT Auth · BCrypt · CORS"]
+        D[(" PostgreSQL\nSQLAlchemy ORM\nMigrations")]
+        E[" AI Risk Discovery\nClause NLP · Risk Scoring\nObligation Extraction"]
+        F[" Google Cloud\nCloud Run · Cloud Armor\nSecret Manager"]
     end
 
     subgraph DevOps["DevOps & Deployment Layer"]
-        G["🔧 GitHub Actions"]
-        H["🏗️ Cloud Build"]
-        I["📦 Artifact Registry"]
-        J["🚀 Cloud Run"]
+        G[" GitHub Actions"]
+        H[" Cloud Build"]
+        I[" Artifact Registry"]
+        J[" Cloud Run"]
     end
 
     A -- "HTTPS" --> B
@@ -184,10 +184,10 @@ Security is built into every layer of the platform, following OWASP best practic
 
 ```mermaid
 sequenceDiagram
-    participant C as 🖥️ Client
-    participant A as ⚡ FastAPI Auth Router
-    participant DB as 🗄️ PostgreSQL
-    participant P as 🔒 Protected Endpoints
+    participant C as  Client
+    participant A as  FastAPI Auth Router
+    participant DB as  PostgreSQL
+    participant P as  Protected Endpoints
 
     C->>A: POST /api/v1/auth/login {email, password}
     A->>DB: Lookup user by email
@@ -453,31 +453,31 @@ Both the frontend (served as a static build via a lightweight server) and the Fa
 
 ```mermaid
 flowchart TD
-    PR["📬 Pull Request Opened"] --> L["🔍 Lint\nESLint + Ruff"]
-    L --> T["🧪 Tests\nPytest + React Testing Library"]
-    T --> B["🐳 Docker Build Validation\nvia Cloud Build"]
+    PR[" Pull Request Opened"] --> L[" Lint\nESLint + Ruff"]
+    L --> T[" Tests\nPytest + React Testing Library"]
+    T --> B[" Docker Build Validation\nvia Cloud Build"]
     B --> R{Review & Merge?}
 
-    R -- "❌ Changes Requested" --> PR
-    R -- "✅ Merged to Main" --> CB["🏗️ Cloud Build\nBuild Backend + Frontend Images"]
-    CB --> AR["📦 Push to Artifact Registry\nTagged with Git SHA"]
-    AR --> D1["🚀 Deploy Backend\nCloud Run: leximind-backend"]
-    AR --> D2["🚀 Deploy Frontend\nCloud Run: leximind-frontend"]
-    D1 --> S["💨 Smoke Tests\nLive Cloud Run endpoint"]
+    R -- " Changes Requested" --> PR
+    R -- " Merged to Main" --> CB[" Cloud Build\nBuild Backend + Frontend Images"]
+    CB --> AR[" Push to Artifact Registry\nTagged with Git SHA"]
+    AR --> D1[" Deploy Backend\nCloud Run: leximind-backend"]
+    AR --> D2[" Deploy Frontend\nCloud Run: leximind-frontend"]
+    D1 --> S[" Smoke Tests\nLive Cloud Run endpoint"]
     D2 --> S
-    S --> N["🔔 Notify Team\nSuccess or Failure"]
+    S --> N[" Notify Team\nSuccess or Failure"]
 ```
 
 ### Cloud Build (`cloudbuild.yaml`)
 
 ```mermaid
 flowchart LR
-    S["☁️ Cloud Build Triggered"] --> B1["🐳 Build Backend\nDocker Image"]
-    S --> B2["🐳 Build Frontend\nDocker Image"]
-    B1 --> P["📦 Push to Artifact Registry\nTagged: Git SHA"]
+    S[" Cloud Build Triggered"] --> B1[" Build Backend\nDocker Image"]
+    S --> B2[" Build Frontend\nDocker Image"]
+    B1 --> P[" Push to Artifact Registry\nTagged: Git SHA"]
     B2 --> P
-    P --> D1["🚀 Deploy Backend\nCloud Run: leximind-backend"]
-    P --> D2["🚀 Deploy Frontend\nCloud Run: leximind-frontend"]
+    P --> D1[" Deploy Backend\nCloud Run: leximind-backend"]
+    P --> D2[" Deploy Frontend\nCloud Run: leximind-frontend"]
 ```
 
 ### Environment Promotion
